@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useTopicsList } from "./hooks/use-topics-list";
 
 export default function TopicsList() {
@@ -8,7 +9,9 @@ export default function TopicsList() {
   return (
     <div>
       {items.map((item) => (
-        <div key={item.id}>{item.text}</div>
+        <div key={item.id}>
+          <Link href={`/topic/${item.id}`}>{item.text}</Link>
+        </div>
       ))}
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useEffectEvent, useState } from "react";
-import { ITopicsListItem } from "../../api/schemas";
+import { ITopicsListItem } from "../../api/topics-list/topic-list.schema";
 import { useSearchParams } from "next/navigation";
 
 export const useTopicsList = () => {

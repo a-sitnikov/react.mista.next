@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import z from "zod";
-import { topicsListSchema } from "../schemas";
+import { topicsListSchema } from "./topic-list.schema";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  console.log("topics-list", url.search); // Log the search parameters for debugging
 
   try {
     const response = await fetch(

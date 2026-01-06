@@ -19,6 +19,11 @@ export const Nav: React.FC = () => {
 
   return (
     <NavigationMenu>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <Link href="/">React.Mista</Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
       <NavigationMenuList>
         {links.map((item) => (
           <NavigationMenuItem key={item.name}>
