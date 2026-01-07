@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import z from "zod";
-import { topicsListSchema } from "./topic-list.schema";
+import { topicsListSchema } from "./topics-list.schema";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
