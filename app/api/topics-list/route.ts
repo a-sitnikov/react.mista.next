@@ -5,15 +5,24 @@ import { topicsListSchema } from "./topics-list.schema";
 export async function GET(req: Request) {
   const url = new URL(req.url);
 
+  const paramsMapping = new Map([["section", "section_short_name"]]);
+
+  // Remap incoming search params according to paramsMatching before forwarding
+  const outgoingParams = new URLSearchParams();
+  url.searchParams.forEach((value, key) => {
+    const mappedKey = paramsMapping.get(key) ?? key;
+    outgoingParams.append(mappedKey, value);
+  });
+
+  const targetUrl = `https://dev.mista.ru/api/topic.php?${outgoingParams.toString()}`;
+
   try {
-    const response = await fetch(
-      "https://dev.mista.ru/api/topic.php" + url.search
-    );
+    const response = await fetch(targetUrl);
     const data = await response.json();
 
     const items = z.parse(topicsListSchema, data);
 
-    return NextResponse.json({ items });
+    return NextResponse.json(items);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json(

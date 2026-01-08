@@ -4,7 +4,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export const TableHeader = () => {
+interface IProps {
+  isLoading: boolean;
+}
+
+export const TableHeader: React.FC<IProps> = ({ isLoading }) => {
   return (
     <div
       className="
@@ -18,7 +22,6 @@ export const TableHeader = () => {
       bg-(--tableHeaderBg)
       grid-cols-[50px_30px_auto_30px_120px_155px]
       "
-      //className="table-header" /* style={{ position: "sticky", top: "39px" }} */
     >
       <div style={{ letterSpacing: "-1px" }}>Раздел</div>
       <div></div>
@@ -28,7 +31,9 @@ export const TableHeader = () => {
       <div>
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="cursor-pointer">{"Обновлено"}</span>
+            <span className="cursor-pointer">
+              {isLoading ? "Обновляется" : "Обновлено"}
+            </span>
           </TooltipTrigger>
           <TooltipContent>
             <p>Обновить список</p>
