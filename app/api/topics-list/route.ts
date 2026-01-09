@@ -24,7 +24,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(items);
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching topic list:", error);
     return NextResponse.json(
       { error: "Failed to fetch topics" },
       { status: 500 }

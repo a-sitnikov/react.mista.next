@@ -1,7 +1,9 @@
 "use client";
 
+import { useTopic } from "@/store/query-hooks/use-topic-messages";
 import { use } from "react";
-import { useTopic } from "../hooks/use-topic";
+import { TopicInfo } from "../components/topic-info";
+import { TopicRow } from "../components/topic-row";
 
 interface IProps {
   params: Promise<{ id: string }>;
@@ -9,7 +11,22 @@ interface IProps {
 
 export default function Topic({ params }: IProps) {
   const { id } = use(params);
-  const { info } = useTopic({ id });
+  const { data } = useTopic({ id });
 
-  return <div>{JSON.stringify(info)}</div>;
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <div className="border">
+      <TopicInfo info={data.info} />
+      {data.items.map((item) => (
+        <TopicRow
+          key={item.n}
+          item={item}
+          isAuthor={item.userId === data.info.authorId}
+        />
+      ))}
+    </div>
+  );
 }

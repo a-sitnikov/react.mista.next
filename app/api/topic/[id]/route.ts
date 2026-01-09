@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import z from "zod";
-import { topicInfoSchema } from "../topic.schema";
+import { messageSchema, topicInfoSchema } from "../topic.schema";
 
 interface IParams {
   id: string;
@@ -13,16 +13,21 @@ export async function GET(
   const { id } = await params;
 
   try {
-    const response = await fetch(
-      "https://dev.mista.ru/ajax_gettopic.php?id=" + id
-    );
-    const data = await response.json();
+    const [infoData, itemsData] = await Promise.all([
+      fetch(`https://dev.mista.ru/ajax_gettopic.php?id=${id}`).then((resp) =>
+        resp.json()
+      ),
+      fetch(`https://dev.mista.ru/api/message.php?id=${id}`).then((resp) =>
+        resp.json()
+      ),
+    ]);
 
-    const info = z.parse(topicInfoSchema, data);
+    const info = z.parse(topicInfoSchema, infoData);
+    const items = z.parse(messageSchema.array(), itemsData);
 
-    return NextResponse.json({ info });
+    return NextResponse.json({ info, items });
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching topic:", error);
     return NextResponse.json(
       { error: "Failed to fetch topics" },
       { status: 500 }

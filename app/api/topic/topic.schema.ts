@@ -41,4 +41,30 @@ export const topicInfoSchema = z
     voting: response.voting,
   }));
 
+export const messageSchema = z
+  .object({
+    id: z.string(),
+    n: z.string(),
+    user: z.string(),
+    userId: z.string(),
+    text: z.string(),
+    utime: z.string(),
+    vote: z.number(),
+  })
+  .transform((response) => ({
+    id: response.id,
+    n: parseInt(response.n),
+    user: response.user,
+    userId: response.userId,
+    text: response.text,
+    time: parseInt(response.utime) * 1000,
+    vote: response.vote,
+  }));
+
 export type ITopicInfo = z.infer<typeof topicInfoSchema>;
+export type IMessage = z.infer<typeof messageSchema>;
+
+export type ITopic = {
+  info: ITopicInfo;
+  items: IMessage[];
+};
