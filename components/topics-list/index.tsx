@@ -3,7 +3,7 @@
 import { TopicsListRow } from "./topics-list-row";
 import { TableHeader } from "./table-header";
 import { useTopicsList } from "@/store/query-hooks";
-import { SelectSection } from "@/components/share/select-section";
+import { SelectSection } from "@/components/shared/select-section";
 
 export default function TopicsList() {
   const { data: items, isFetching } = useTopicsList();

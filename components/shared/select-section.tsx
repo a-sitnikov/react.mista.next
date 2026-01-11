@@ -1,14 +1,5 @@
 import { ChangeEventHandler, useMemo } from "react";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useSections } from "@/store/query-hooks";
 import { groupBy } from "@/lib/utils";
 import {

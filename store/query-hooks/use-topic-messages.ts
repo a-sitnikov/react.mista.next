@@ -1,4 +1,8 @@
-import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useQuery,
+  type UseQueryOptions,
+} from "@tanstack/react-query";
 import { QueryKeys } from "./types";
 import { ITopic } from "@/app/api/topic/topic.schema";
 
@@ -26,4 +30,17 @@ export const useTopic = <TError = Error, TData = ITopic>(
     placeholderData: (previousData) => previousData,
     ...options,
   });
+};
+
+export const getCachedTopicData = (
+  queryClient: QueryClient,
+  topicId: string
+) => {
+  const topicQueries = queryClient.getQueriesData({
+    queryKey: [QueryKeys.TopicMessages, topicId],
+  });
+
+  if (topicQueries.length === 0) return undefined;
+
+  return topicQueries[0][1] as ITopic;
 };

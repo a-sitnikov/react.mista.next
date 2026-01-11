@@ -1,16 +1,18 @@
 import { IMessage } from "@/app/api/topic/topic.schema";
 import { Interweave, InterweaveProps } from "interweave";
 import { usePrepareHtml } from "../hooks/use-prepare-html";
-import { Code } from "@/components/share/code";
-import { LinkToPost } from "@/components/share/link-to-post";
-import { CustomLink } from "@/components/share/custom-link";
+import { Code } from "@/components/shared/code";
+import { LinkToPost } from "@/components/shared/link-to-post";
+import { CustomLink } from "@/components/shared/custom-link";
+import { twMerge } from "tailwind-merge";
 
 interface IProps {
   item: IMessage;
   topicId: string;
+  classname?: string;
 }
 
-export const MsgText: React.FC<IProps> = ({ item, topicId }) => {
+export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
   const { prepareHtml } = usePrepareHtml();
 
   const content = prepareHtml(item.text, item.id);
@@ -53,5 +55,12 @@ export const MsgText: React.FC<IProps> = ({ item, topicId }) => {
     }
   };
 
-  return <Interweave content={content} transform={transform} className="p-3" />;
+  return (
+    <Interweave
+      tagName="div"
+      content={content}
+      transform={transform}
+      className={twMerge("p-3", classname)}
+    />
+  );
 };
