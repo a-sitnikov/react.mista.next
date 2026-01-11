@@ -1,6 +1,3 @@
-"use client";
-import TopicsList from "./topics-list";
+import TopicsList from "@/components/topics-list";
 
-export default function Home() {
-  return <TopicsList />;
-}
+export default TopicsList;

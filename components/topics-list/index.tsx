@@ -1,7 +1,7 @@
 "use client";
 
-import { TopicsListRow } from "./components/topics-list-row";
-import { TableHeader } from "./components/table-header";
+import { TopicsListRow } from "./topics-list-row";
+import { TableHeader } from "./table-header";
 import { useTopicsList } from "@/store/query-hooks";
 import { SelectSection } from "@/components/share/select-section";
 
