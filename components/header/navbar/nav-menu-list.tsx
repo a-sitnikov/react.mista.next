@@ -25,7 +25,11 @@ export const NavMenuList: React.FC<IProps> = ({ onClick, ...props }) => {
       {links.map((item) => (
         <NavigationMenuItem key={item.name}>
           <NavigationMenuLink asChild>
-            <Link href={item.link} onClick={onClick}>
+            <Link
+              href={item.link}
+              onClick={onClick}
+              className="text-foreground"
+            >
               {item.name}
             </Link>
           </NavigationMenuLink>

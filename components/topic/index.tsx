@@ -24,6 +24,7 @@ export default function Topic({ params }: IProps) {
         <TopicRow
           key={item.n}
           item={item}
+          topicId={id}
           isAuthor={item.userId === data.info.authorId}
         />
       ))}

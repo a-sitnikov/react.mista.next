@@ -1,14 +1,57 @@
 import { IMessage } from "@/app/api/topic/topic.schema";
+import { Interweave, InterweaveProps } from "interweave";
+import { usePrepareHtml } from "../hooks/use-prepare-html";
+import { Code } from "@/components/share/code";
+import { LinkToPost } from "@/components/share/link-to-post";
+import { CustomLink } from "@/components/share/custom-link";
 
 interface IProps {
   item: IMessage;
+  topicId: string;
 }
 
-export const MsgText: React.FC<IProps> = ({ item }) => {
-  return (
-    <div
-      className="[grid-area:message] p-3"
-      dangerouslySetInnerHTML={{ __html: item.text }}
-    />
-  );
+export const MsgText: React.FC<IProps> = ({ item, topicId }) => {
+  const { prepareHtml } = usePrepareHtml();
+
+  const content = prepareHtml(item.text, item.id);
+
+  const transform: InterweaveProps["transform"] = (node, children) => {
+    const tagName = node.tagName.toLowerCase();
+    switch (tagName) {
+      case "a": {
+        const href = node.getAttribute("href") ?? "";
+        return (
+          <CustomLink href={href} parentText={item.text}>
+            {children}
+          </CustomLink>
+        );
+      }
+
+      case "link": {
+        const n = parseInt(node.getAttribute("data-number") ?? "0");
+        return <LinkToPost topicId={topicId} n={n} />;
+      }
+
+      case "code":
+      case "pre":
+        return <Code>{children}</Code>;
+
+      // case "int_img": {
+      //   const idx = node.getAttribute("idx");
+      //   return (
+      //     <InternalImage
+      //       topicId={topicId}
+      //       topicDate={topicDate}
+      //       messageNumber={messageNumber}
+      //       idx={idx}
+      //     />
+      //   );
+      //}
+
+      default:
+        return undefined;
+    }
+  };
+
+  return <Interweave content={content} transform={transform} className="p-3" />;
 };

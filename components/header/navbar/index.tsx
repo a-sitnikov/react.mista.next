@@ -13,7 +13,7 @@ export const NavBar: React.FC = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-white">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="text-xl font-bold">
+        <Link href="/" className="text-xl font-bold text-foreground">
           React.Mista
         </Link>
         {/* Desktop NavigationMenu */}

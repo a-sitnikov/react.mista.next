@@ -14,7 +14,7 @@ export const UserInfo: React.FC<IProps> = ({ item, isAuthor }) => {
       <Link
         href={`/user/${item.userId}`}
         className={twMerge(
-          "font-bold px-1",
+          "font-bold px-1 text-foreground",
           isAuthor && "bg-amber-400 rounded-xs"
         )}
       >

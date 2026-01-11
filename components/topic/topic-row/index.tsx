@@ -4,14 +4,15 @@ import { MsgText } from "./msg-text";
 
 interface IProps {
   item: IMessage;
+  topicId: string;
   isAuthor: boolean;
 }
 
-export const TopicRow: React.FC<IProps> = ({ item, isAuthor }) => {
+export const TopicRow: React.FC<IProps> = ({ item, topicId, isAuthor }) => {
   return (
-    <div className="grid grid-cols-[165px_1fr] [grid-template-areas:'user_message'] border-t">
+    <div className="grid grid-cols-[165px_1fr] [grid-template-areas:'user_message'] border-t bg-background">
       <UserInfo item={item} isAuthor={isAuthor} />
-      <MsgText item={item} />
+      <MsgText item={item} topicId={topicId} />
     </div>
   );
 };

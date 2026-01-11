@@ -17,6 +17,7 @@ export const TopicsListRow: React.FC<IProps> = ({ item }) => {
       grid-cols-[50px_30px_auto_30px_120px_155px] 
       [grid-template-areas:'forum_expand_title_count_author_lastuser']
       border-b
+      bg-background
       "
     >
       <ForumCell item={item} />
