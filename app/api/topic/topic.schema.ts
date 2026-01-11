@@ -49,7 +49,7 @@ export const messageSchema = z
     userId: z.string(),
     text: z.string(),
     utime: z.string(),
-    vote: z.number(),
+    vote: z.union([z.string(), z.number()]).optional(),
   })
   .transform((response) => ({
     id: response.id,
@@ -58,7 +58,7 @@ export const messageSchema = z
     userId: response.userId,
     text: response.text,
     time: parseInt(response.utime) * 1000,
-    vote: response.vote,
+    vote: Number(response.vote ?? 0),
   }));
 
 export type ITopicInfo = z.infer<typeof topicInfoSchema>;

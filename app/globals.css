@@ -45,8 +45,8 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  /*custom colors*/
-  --color-linkColor: #0000cc;
+  /*custom tokens*/
+  --color-linkColor: var(--linkColor);
 }
 
 :root {
@@ -85,6 +85,7 @@
 
   /*custom colors*/
   --tableHeaderBg: oklch(0.922 0 0);
+  --linkColor: #0000cc;
 }
 
 .dark {
