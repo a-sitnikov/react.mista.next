@@ -11,7 +11,11 @@ export async function GET(
   { params }: { params: Promise<IParams> },
 ) {
   const { id, messageId } = await params;
-  const data = await fetchMessageGet(id, messageId);
 
-  return NextResponse.json(data);
+  try {
+    const data = await fetchMessageGet(id, messageId);
+    return NextResponse.json(data);
+  } catch (error) {
+    return new NextResponse((error as Error).message, { status: 500 });
+  }
 }

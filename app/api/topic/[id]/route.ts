@@ -73,10 +73,6 @@ export async function GET(
       );
     }
   } catch (error) {
-    console.error("Error fetching topic:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch topics" },
-      { status: 500 },
-    );
+    return new NextResponse((error as Error).message, { status: 500 });
   }
 }

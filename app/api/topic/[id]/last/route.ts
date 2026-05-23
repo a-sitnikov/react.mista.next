@@ -18,10 +18,6 @@ export async function GET(
     const items = await fetchTopicRefresh(id, lastN);
     return NextResponse.json(items);
   } catch (error) {
-    console.error("Error fetching topic:", error);
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 },
-    );
+    return new NextResponse((error as Error).message, { status: 500 });
   }
 }
