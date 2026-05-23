@@ -68,3 +68,11 @@ export type ITopic = {
   info: ITopicInfo;
   items: IMessage[];
 };
+
+export type IMessage1 = {
+  n: number;
+  user: string;
+  userId: string;
+  date: string;
+  text: string;
+};

@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
 import { ITopicsListItem } from "./topics-list.schema";
+import { undefinedIfEmpty } from "@/lib/utils";
 
-function extractTopics(html: string): ITopicsListItem[] {
+function parseTopics(html: string): ITopicsListItem[] {
   const root = parse(html);
 
   return root.querySelectorAll("#topicsList tr[data-topic-id]").map((row) => {
@@ -16,7 +17,7 @@ function extractTopics(html: string): ITopicsListItem[] {
       text: row.querySelector(".topic-link")?.text.trim() ?? "",
       count: isNaN(answers) ? 0 : answers,
       forum: attr("data-arena"),
-      section: attr("data-section"),
+      section: undefinedIfEmpty(attr("data-section")),
       author: row.querySelector(".user-link")?.text.trim() ?? "",
       authorId: attr("data-author-id"),
       updated: row.querySelector(".updated")?.text.trim() ?? "",
@@ -31,10 +32,12 @@ function extractTopics(html: string): ITopicsListItem[] {
 }
 
 export async function GET(req: Request) {
+  const mistaURL = new URL(process.env.MISTA_DOMAIN ?? "");
+
   const url = new URL(req.url);
-  url.hostname = "mista.ru";
-  url.protocol = "https:";
-  url.port = "";
+  url.hostname = mistaURL.hostname;
+  url.protocol = mistaURL.protocol;
+  url.port = mistaURL.port;
   url.pathname = "";
 
   const targetUrl = url.toString();
@@ -43,7 +46,7 @@ export async function GET(req: Request) {
     const response = await fetch(targetUrl);
     const html = await response.text();
 
-    const items = extractTopics(html);
+    const items = parseTopics(html);
 
     return NextResponse.json(items);
   } catch (error) {

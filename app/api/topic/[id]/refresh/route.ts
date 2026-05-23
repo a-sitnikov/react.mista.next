@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { IMessage1 } from "../topic.schema";
+import { IMessage1 } from "../../topic.schema";
 import { parse } from "node-html-parser";
 
 interface IParams {
@@ -49,8 +49,10 @@ export async function GET(
   body.append("TOPIC_ID", id);
   body.append("LAST_N", lastN);
 
+  const MISTA_DOMAIN = process.env.MISTA_DOMAIN;
+
   try {
-    const response = await fetch(`https://forum.mista.ru/topic/refresh`, {
+    const response = await fetch(`${MISTA_DOMAIN}/topic/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

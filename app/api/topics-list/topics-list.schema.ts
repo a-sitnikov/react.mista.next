@@ -3,7 +3,7 @@ export interface ITopicsListItem {
   text: string;
   count: number;
   forum: string;
-  section: string;
+  section?: string;
   author: string;
   authorId: string;
   updated: string;
