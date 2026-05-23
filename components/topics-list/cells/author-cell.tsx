@@ -6,6 +6,8 @@ type IProps = {
 
 export const AuthorCell: React.FC<IProps> = ({ item }) => (
   <div className="p-1.5 border-r text-xs flex [grid-area:author] ">
-    <div className="my-auto break-all">{item.author}</div>
+    <a href={`/user/${item.authorId}`} className="my-auto break-all">
+      {item.author}
+    </a>
   </div>
 );

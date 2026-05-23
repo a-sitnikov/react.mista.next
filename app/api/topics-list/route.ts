@@ -1,21 +1,8 @@
 import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
+import { ITopicsListItem } from "./topics-list.schema";
 
-interface Topic {
-  id: string;
-  text: string;
-  answers: number;
-  section: string;
-  subsection: string;
-  author: string;
-  authorId: string;
-  updated: string;
-  down?: boolean;
-  isVoting?: boolean;
-  paid?: boolean;
-}
-
-function extractTopics(html: string): Topic[] {
+function extractTopics(html: string): ITopicsListItem[] {
   const root = parse(html);
 
   return root.querySelectorAll("#topicsList tr[data-topic-id]").map((row) => {
@@ -27,9 +14,9 @@ function extractTopics(html: string): Topic[] {
     return {
       id: attr("data-topic-id"),
       text: row.querySelector(".topic-link")?.text.trim() ?? "",
-      answers: isNaN(answers) ? 0 : answers,
-      section: attr("data-arena"),
-      subsection: attr("data-section"),
+      count: isNaN(answers) ? 0 : answers,
+      forum: attr("data-arena"),
+      section: attr("data-section"),
       author: row.querySelector(".user-link")?.text.trim() ?? "",
       authorId: attr("data-author-id"),
       updated: row.querySelector(".updated")?.text.trim() ?? "",

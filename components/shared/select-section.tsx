@@ -13,9 +13,12 @@ export const SelectSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { data: items = [] } = useSections();
+  const { data: items = [], isError } = useSections();
+  if (isError) {
+    return null;
+  }
 
-  const tree = useMemo(() => groupBy(items, (item) => item.forum), [items]);
+  const tree = groupBy(items, (item) => item.forum);
 
   const handleSectionChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const newSection = e.target.value;

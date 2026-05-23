@@ -3,7 +3,7 @@ import { ForumCell } from "./cells/forum-cell";
 import { TitleCell } from "./cells/title-cell";
 import { CountCell } from "./cells/count-cell";
 import { AuthorCell } from "./cells/author-cell";
-import { LastUserCell } from "./cells/last-user-cell";
+import { UpdatedCell } from "./cells/updated-cell";
 import { ExpandCell } from "./cells/expand-cell";
 
 interface IProps {
@@ -25,7 +25,7 @@ export const TopicsListRow: React.FC<IProps> = ({ item }) => {
       <TitleCell item={item} />
       <CountCell item={item} />
       <AuthorCell item={item} />
-      <LastUserCell item={item} />
+      <UpdatedCell item={item} />
     </div>
   );
 };
