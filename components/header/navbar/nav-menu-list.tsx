@@ -29,6 +29,7 @@ export const NavMenuList: React.FC<IProps> = ({ onClick, ...props }) => {
               href={item.link}
               onClick={onClick}
               className="text-foreground"
+              prefetch={false}
             >
               {item.name}
             </Link>
