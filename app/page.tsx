@@ -1,3 +1,3 @@
-import TopicsList from "@/components/topics-list";
+import { TopicsList } from "@/components/topics-list";
 
 export default TopicsList;
