@@ -1,12 +1,12 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import { QueryKeys } from "./types";
 import { useSearchParams } from "next/navigation";
-import { ITopicsListItem } from "@/mista-api/types";
+import { IAPITopicsList } from "@/app/api/topics-list/route";
 
-export const useTopicsList = <TError = Error, TData = ITopicsListItem[]>(
+export const useTopicsList = <TError = Error, TData = IAPITopicsList>(
   options?: Omit<
     UseQueryOptions<
-      ITopicsListItem[],
+      IAPITopicsList,
       TError,
       TData,
       [QueryKeys.TopicsList, object]
@@ -24,9 +24,9 @@ export const useTopicsList = <TError = Error, TData = ITopicsListItem[]>(
         throw new Error(`${resp.status}: ${resp.statusText}`);
       }
 
-      return resp.json() as Promise<ITopicsListItem[]>;
+      return resp.json() as Promise<IAPITopicsList>;
     },
-    placeholderData: (previousData) => previousData ?? [],
+    placeholderData: (previousData) => previousData,
     ...options,
   });
 };

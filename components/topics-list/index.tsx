@@ -5,13 +5,22 @@ import { TableHeader } from "./table-header";
 import { useTopicsList } from "@/store/query-hooks";
 import { SelectSection } from "@/components/shared/select-section";
 import { Suspense } from "react";
+import ModalFrame from "../shared/modal-frame";
 
 const TopicsList_ = () => {
-  const { data: items, isFetching } = useTopicsList();
+  const { data, isFetching } = useTopicsList();
 
-  if (!items) {
+  if (!data) {
     return null;
   }
+
+  console.log(data);
+
+  if (!data.ok) {
+    return <ModalFrame isOpen={true} title="Error" htmlContent={data.text} />;
+  }
+
+  const items = data.data;
 
   return (
     <div>

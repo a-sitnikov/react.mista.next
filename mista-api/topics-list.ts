@@ -1,11 +1,17 @@
 import { parse } from "node-html-parser";
 import { undefinedIfEmpty } from "@/lib/utils";
 import { ITopicsListItem } from "./types";
+import { IErrorResponse, IOKResponse } from "@/app/api/types";
 
-function parseTopics(html: string): ITopicsListItem[] {
+function parseTopics(html: string): ITopicsListItem[] | undefined {
   const root = parse(html);
 
-  return root.querySelectorAll("#topicsList tr[data-topic-id]").map((row) => {
+  const rows = root.querySelectorAll("#topicsList tr[data-topic-id]");
+  if (rows.length === 0) {
+    return undefined;
+  }
+
+  return rows.map((row) => {
     const attr = (name: string) => row.getAttribute(name) ?? "";
 
     const repliesText = row.querySelector(".replies")?.text.trim() ?? "";
@@ -46,12 +52,24 @@ export const fetchTopicsList = async (
   const response = await fetch(url, { headers });
   const html = await response.text();
 
-  const data = parseTopics(html);
-
   const respHeaders = new Headers(response.headers);
   respHeaders.delete("content-encoding");
   respHeaders.delete("content-length");
   respHeaders.set("content-type", "application/json");
 
-  return { data, headers: respHeaders };
+  const data = parseTopics(html);
+  if (!data) {
+    return {
+      ok: false,
+      error: "Failed to parse topics list",
+      text: html,
+      headers: respHeaders,
+    } satisfies IErrorResponse;
+  } else {
+    return {
+      ok: true,
+      data,
+      headers: respHeaders,
+    } satisfies IOKResponse<ITopicsListItem[]>;
+  }
 };
