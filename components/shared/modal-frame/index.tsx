@@ -8,28 +8,32 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-interface ModalFrameProps {
-  isOpen: boolean;
-  onOpenChange?: (open: boolean) => void;
+interface IProps {
   title?: string;
   htmlContent: string;
   iframeClassName?: string;
   dialogClassName?: string;
 }
 
-export function ModalFrame({
-  isOpen,
-  onOpenChange,
+export const ModalFrame: React.FC<IProps> = ({
   title,
   htmlContent,
   iframeClassName,
   dialogClassName,
-}: ModalFrameProps) {
+}) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeHeight, setIframeHeight] = useState(600);
+  const [open, setOpen] = useState(true);
+
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      window.location.reload();
+    }
+  };
 
   useEffect(() => {
-    if (isOpen && iframeRef.current) {
+    if (open && iframeRef.current) {
       // Auto-adjust height based on content
       setTimeout(() => {
         try {
@@ -48,10 +52,10 @@ export function ModalFrame({
         }
       }, 100);
     }
-  }, [isOpen, htmlContent]);
+  }, [open, htmlContent]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className={dialogClassName}>
         {title && (
           <DialogHeader>
@@ -76,6 +80,6 @@ export function ModalFrame({
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 export default ModalFrame;

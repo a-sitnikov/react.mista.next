@@ -6,7 +6,7 @@ import { IErrorResponse, IOKResponse } from "@/app/api/types";
 function parseTopics(html: string): ITopicsListItem[] | undefined {
   const root = parse(html);
 
-  const rows = root.querySelectorAll("#topicsList tr[data-topic-id]");
+  const rows = root.querySelectorAll("#topicsList1 tr[data-topic-id]");
   if (rows.length === 0) {
     return undefined;
   }

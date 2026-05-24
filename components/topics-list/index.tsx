@@ -14,10 +14,10 @@ const TopicsList_ = () => {
     return null;
   }
 
-  console.log(data);
-
   if (!data.ok) {
-    return <ModalFrame isOpen={true} title="Error" htmlContent={data.text} />;
+    return (
+      <ModalFrame title="Ошибка при получении данных" htmlContent={data.text} />
+    );
   }
 
   const items = data.data;
