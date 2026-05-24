@@ -11,11 +11,17 @@ export async function GET(
   { params }: { params: Promise<IParams> },
 ) {
   const { id, messageId } = await params;
+  const cookie = req.headers.get("cookie");
 
   try {
-    const data = await fetchMessageGet(id, messageId);
-    return NextResponse.json(data);
+    const { data, headers } = await fetchMessageGet(id, messageId, cookie);
+    return NextResponse.json(data, { headers });
   } catch (error) {
-    return new NextResponse((error as Error).message, { status: 500 });
+    const message = (error as Error).message;
+    if (message.includes("is not valid JSON")) {
+      return new NextResponse(message, { status: 500 });
+    } else {
+      return new NextResponse(message, { status: 500 });
+    }
   }
 }

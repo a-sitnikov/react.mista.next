@@ -46,27 +46,63 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
   };
 };
 
-export const fetchMessageGet = async (topicId: string, n: number | string) => {
+export const fetchMessageGet = async (
+  topicId: string,
+  n: number | string,
+  cookie?: string | null,
+) => {
   const body = new URLSearchParams();
   body.append("TOPIC_ID", topicId);
   body.append("MESSAGE_N", String(n));
 
   const MISTA_DOMAIN = process.env.MISTA_DOMAIN;
 
+  const headers = new Headers({
+    "Content-Type": "application/x-www-form-urlencoded",
+  });
+
+  if (cookie) {
+    headers.set("cookie", cookie);
+  }
+
   const response = await fetch(`${MISTA_DOMAIN}/message/get`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    headers,
     body,
   });
 
   const text = await response.text();
-  const payload = JSON.parse(text);
+
+  let payload;
+  try {
+    payload = JSON.parse(text);
+  } catch (error) {
+    return {
+      ok: false,
+      error: (error as Error).message,
+      text,
+    };
+  }
+
   if (payload.success === "1") {
     const html = `<tr>${payload.data}</tr>`;
-    return parseMessage(html);
+    const data = parseMessage(html);
+
+    const headers = new Headers(response.headers);
+    headers.delete("content-encoding");
+    headers.delete("content-length");
+    headers.set("content-type", "application/json");
+
+    return {
+      ok: true,
+      headers,
+      data,
+    };
   } else {
-    throw new Error(payload.data);
+    return {
+      ok: false,
+      headers: new Headers(response.headers),
+      error: payload.data,
+    };
   }
 };

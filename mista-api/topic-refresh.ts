@@ -9,18 +9,27 @@ const parseMessages = (html: string): IMessage[] => {
   return rows.map(parseMessage);
 };
 
-export const fetchTopicRefresh = async (topicId: string, lastN: string) => {
+export const fetchTopicRefresh = async (
+  topicId: string,
+  lastN: string,
+  cookie?: string | null,
+) => {
   const body = new URLSearchParams();
   body.append("TOPIC_ID", topicId);
   body.append("LAST_N", lastN);
 
   const MISTA_DOMAIN = process.env.MISTA_DOMAIN;
+  const headers = new Headers({
+    "Content-Type": "application/x-www-form-urlencoded",
+  });
+
+  if (cookie) {
+    headers.set("cookie", cookie);
+  }
 
   const response = await fetch(`${MISTA_DOMAIN}/topic/refresh`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    headers,
     body,
   });
 
@@ -30,7 +39,13 @@ export const fetchTopicRefresh = async (topicId: string, lastN: string) => {
   if (payload.success === "1") {
     const data = JSON.parse(payload.data);
     const html = `<table>${data.MESSAGES_HTML}</table>`;
-    return parseMessages(html);
+
+    const headers = new Headers(response.headers);
+    headers.delete("content-encoding");
+    headers.delete("content-length");
+    headers.set("content-type", "application/json");
+
+    return { data: parseMessages(html), headers };
   } else {
     throw new Error(payload.data || "Failed to parse topic data");
   }

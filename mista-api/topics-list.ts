@@ -30,11 +30,26 @@ function parseTopics(html: string): ITopicsListItem[] {
   });
 }
 
-export const fetchTopicsList = async (searchParams: URLSearchParams) => {
+export const fetchTopicsList = async (
+  searchParams: URLSearchParams,
+  cookie?: string | null,
+) => {
   const url = `${process.env.MISTA_DOMAIN}${searchParams}`;
 
-  const response = await fetch(url);
+  const headers = new Headers();
+  if (cookie) {
+    headers.set("cookie", cookie);
+  }
+
+  const response = await fetch(url, { headers });
   const html = await response.text();
 
-  return parseTopics(html);
+  const data = parseTopics(html);
+
+  const respHeaders = new Headers(response.headers);
+  respHeaders.delete("content-encoding");
+  respHeaders.delete("content-length");
+  respHeaders.set("content-type", "application/json");
+
+  return { data, headers: respHeaders };
 };

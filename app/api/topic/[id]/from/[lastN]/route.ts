@@ -3,20 +3,20 @@ import { fetchTopicRefresh } from "@/mista-api/topic-refresh";
 
 interface IParams {
   id: string;
+  lastN: string;
 }
 
 export async function GET(
   req: Request,
   { params }: { params: Promise<IParams> },
 ) {
-  const url = new URL(req.url);
-  const lastN = url.searchParams.get("last_n") ?? "-1";
+  const cookie = req.headers.get("cookie");
 
-  const { id } = await params;
+  const { id, lastN = "-1" } = await params;
 
   try {
-    const items = await fetchTopicRefresh(id, lastN);
-    return NextResponse.json(items);
+    const { data, headers } = await fetchTopicRefresh(id, lastN, cookie);
+    return NextResponse.json(data, { headers });
   } catch (error) {
     return new NextResponse((error as Error).message, { status: 500 });
   }
