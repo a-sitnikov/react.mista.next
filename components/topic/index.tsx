@@ -1,6 +1,6 @@
 "use client";
 
-import { useTopic } from "@/store/query-hooks/use-topic-messages";
+import { useTopic } from "@/store/query-hooks/use-topic";
 import { use } from "react";
 import { TopicInfo } from "./topic-info";
 import { TopicRow } from "./topic-row";
@@ -25,7 +25,7 @@ export default function Topic({ params }: IProps) {
           key={item.n}
           item={item}
           topicId={id}
-          isAuthor={item.userId === data.info.authorId}
+          isAuthor={item.user.id === data.info.author.id}
         />
       ))}
     </div>

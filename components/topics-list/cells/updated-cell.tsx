@@ -1,4 +1,4 @@
-import { ITopicsListItem } from "@/app/api/topics-list/topics-list.schema";
+import { ITopicsListItem } from "@/mista-api/types";
 
 type IProps = {
   item: ITopicsListItem;

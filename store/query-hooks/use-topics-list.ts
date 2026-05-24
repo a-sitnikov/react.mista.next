@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import { QueryKeys } from "./types";
-import { ITopicsListItem } from "@/app/api/topics-list/topics-list.schema";
 import { useSearchParams } from "next/navigation";
+import { ITopicsListItem } from "@/mista-api/types";
 
 export const useTopicsList = <TError = Error, TData = ITopicsListItem[]>(
   options?: Omit<
@@ -12,7 +12,7 @@ export const useTopicsList = <TError = Error, TData = ITopicsListItem[]>(
       [QueryKeys.TopicsList, object]
     >,
     "queryKey" | "queryFn"
-  >
+  >,
 ) => {
   const searchParams = useSearchParams();
 

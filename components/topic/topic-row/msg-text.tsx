@@ -1,10 +1,10 @@
-import { IMessage } from "@/app/api/topic/topic.schema";
 import { Interweave, InterweaveProps } from "interweave";
 import { usePrepareHtml } from "../hooks/use-prepare-html";
 import { Code } from "@/components/shared/code";
 import { LinkToPost } from "@/components/shared/link-to-post";
 import { CustomLink } from "@/components/shared/custom-link";
 import { twMerge } from "tailwind-merge";
+import { IMessage } from "@/mista-api/types";
 
 interface IProps {
   item: IMessage;
@@ -15,7 +15,7 @@ interface IProps {
 export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
   const { prepareHtml } = usePrepareHtml();
 
-  const content = prepareHtml(item.text, item.id);
+  const content = prepareHtml(item.text, topicId);
 
   const transform: InterweaveProps["transform"] = (node, children) => {
     const tagName = node.tagName.toLowerCase();

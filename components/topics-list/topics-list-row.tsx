@@ -1,10 +1,10 @@
-import { ITopicsListItem } from "@/app/api/topics-list/topics-list.schema";
 import { ForumCell } from "./cells/forum-cell";
 import { TitleCell } from "./cells/title-cell";
 import { CountCell } from "./cells/count-cell";
 import { AuthorCell } from "./cells/author-cell";
 import { UpdatedCell } from "./cells/updated-cell";
 import { ExpandCell } from "./cells/expand-cell";
+import { ITopicsListItem } from "@/mista-api/types";
 
 interface IProps {
   item: ITopicsListItem;

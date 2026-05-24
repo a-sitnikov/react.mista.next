@@ -2,7 +2,7 @@ import { parse } from "node-html-parser";
 import { ITopic } from "./types";
 import { parseMessage } from "./message-get";
 
-function parseTopic(html: string): ITopic {
+function parseTopic(html: string, topicId: string): ITopic {
   const root = parse(html);
 
   const titleEl = root.querySelector("th.topic-title");
@@ -17,7 +17,16 @@ function parseTopic(html: string): ITopic {
       })) ?? [];
 
   const items = root.querySelectorAll("tr.message-row").map(parseMessage);
-  return { title, readers, items };
+
+  return {
+    info: {
+      id: topicId,
+      title,
+      author: items[0].user,
+      readers,
+    },
+    items,
+  };
 }
 
 export const fetchTopic = async (topicId: string, cookie?: string | null) => {
@@ -33,7 +42,7 @@ export const fetchTopic = async (topicId: string, cookie?: string | null) => {
 
   const fixedHtml = html.replace(/<\/div<\/th>/gi, "<\/div><\/th>");
 
-  const data = parseTopic(fixedHtml);
+  const data = parseTopic(fixedHtml, topicId);
 
   const respHeaders = new Headers(response.headers);
   respHeaders.delete("content-encoding");

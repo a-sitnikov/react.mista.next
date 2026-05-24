@@ -1,7 +1,7 @@
-import { IMessage } from "@/app/api/topic/topic.schema";
 import { MsgTime } from "@/components/topic/topic-row/msg-time";
 import { UserLink } from "@/components/topic/topic-row/user-link";
 import { Button } from "@/components/ui/button";
+import { IMessage } from "@/mista-api/types";
 import { X } from "lucide-react";
 
 interface IProps {
@@ -15,7 +15,7 @@ export const MsgTooltipHeader: React.FC<IProps> = ({ item, close }) => {
   return (
     <div className="flex items-center justify-between gap-2 border-b p-1 pl-2">
       <div className="flex gap-1 items-center">
-        <UserLink id={item.userId} name={item.user} isAuthor={false} />
+        <UserLink id={item.user.id} name={item.user.name} isAuthor={false} />
         <MsgTime item={item} />
       </div>
       <Button

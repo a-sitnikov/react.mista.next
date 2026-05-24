@@ -1,5 +1,5 @@
 import { DOMAIN } from "@/app/api/constants";
-import { ITopicInfo } from "@/app/api/topic/topic.schema";
+import { ITopicInfo } from "@/mista-api/types";
 
 interface IProps {
   info: ITopicInfo;

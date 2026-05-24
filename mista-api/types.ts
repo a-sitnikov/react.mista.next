@@ -36,8 +36,14 @@ export type IMessage = {
   poll?: PollItem[];
 };
 
-export type ITopic = {
+export type ITopicInfo = {
+  id: string;
   title: string;
+  author: IUser;
   readers?: IUser[];
+};
+
+export type ITopic = {
+  info: ITopicInfo;
   items: IMessage[];
 };

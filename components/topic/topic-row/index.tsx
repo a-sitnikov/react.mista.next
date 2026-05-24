@@ -1,6 +1,6 @@
-import { IMessage } from "@/app/api/topic/topic.schema";
 import { UserInfo } from "./user-info";
 import { MsgText } from "./msg-text";
+import { IMessage } from "@/mista-api/types";
 
 interface IProps {
   item: IMessage;

@@ -4,7 +4,7 @@ import {
   type UseQueryOptions,
 } from "@tanstack/react-query";
 import { QueryKeys } from "./types";
-import { ITopic } from "@/app/api/topic/topic.schema";
+import { ITopic } from "@/mista-api/types";
 
 interface IProps {
   id: string;
@@ -15,7 +15,7 @@ export const useTopic = <TError = Error, TData = ITopic>(
   options?: Omit<
     UseQueryOptions<ITopic, TError, TData, [QueryKeys.TopicMessages, string]>,
     "queryKey" | "queryFn"
-  >
+  >,
 ) => {
   return useQuery({
     queryKey: [QueryKeys.TopicMessages, id],
@@ -34,7 +34,7 @@ export const useTopic = <TError = Error, TData = ITopic>(
 
 export const getCachedTopicData = (
   queryClient: QueryClient,
-  topicId: string
+  topicId: string,
 ) => {
   const topicQueries = queryClient.getQueriesData({
     queryKey: [QueryKeys.TopicMessages, topicId],
