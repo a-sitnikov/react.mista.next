@@ -17,8 +17,10 @@ function parseTopics(html: string): ITopicsListItem[] {
       count: isNaN(answers) ? 0 : answers,
       forum: attr("data-arena"),
       section: undefinedIfEmpty(attr("data-section")),
-      author: row.querySelector(".user-link")?.text.trim() ?? "",
-      authorId: attr("data-author-id"),
+      author: {
+        id: attr("data-author-id"),
+        name: row.querySelector(".user-link")?.text.trim() ?? "",
+      },
       updated: row.querySelector(".updated")?.text.trim() ?? "",
       down:
         row.querySelector("span.status")?.text.trim() === "↓"

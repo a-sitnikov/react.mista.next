@@ -10,10 +10,6 @@ export async function GET(req: Request) {
 
     return NextResponse.json(data, { headers });
   } catch (error) {
-    console.error("Error fetching topic list:", error);
-    return NextResponse.json(
-      { error: () => (error as Error).message },
-      { status: 500 },
-    );
+    return new NextResponse((error as Error).message, { status: 500 });
   }
 }

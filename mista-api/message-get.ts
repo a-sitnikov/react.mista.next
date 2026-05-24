@@ -1,5 +1,6 @@
 import { HTMLElement, parse } from "node-html-parser";
 import { IMessage } from "./types";
+import { undefinedIfEmpty } from "@/lib/utils";
 
 export const parseMessage = (html: string | HTMLElement): IMessage => {
   let row: HTMLElement;
@@ -35,14 +36,32 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
     .map((filename) => `${process.env.MISTA_DOMAIN}${filename}`)
     .filter(Boolean);
 
+  const pollEl = row.querySelectorAll("table.tableVotingResults tr.variant");
+  const poll = pollEl.map((pollRow) => {
+    const rawText = pollRow.querySelector("td.text a")?.text.trim() ?? "";
+    const numberMatch = rawText.match(/^(\d+)\.\s*/);
+    const number = numberMatch ? parseInt(numberMatch[1], 10) : 0;
+    const text = rawText.replace(/^\d+\.\s*/, "").trim();
+
+    const resultText = pollRow.querySelector("td.result")?.text.trim() ?? "";
+    const resultMatch = resultText.match(/(\d+)%\s*\((\d+)\)/);
+    const percentage = resultMatch ? parseInt(resultMatch[1], 10) : 0;
+    const votes = resultMatch ? parseInt(resultMatch[2], 10) : 0;
+
+    return { number, text, percentage, votes };
+  });
+
   return {
     n,
-    user,
-    userId,
+    user: {
+      id: userId,
+      name: user,
+    },
     date: `${date} ${time}`,
     text,
     voting: votingVariant,
     imgs,
+    poll: undefinedIfEmpty(poll),
   };
 };
 
@@ -86,6 +105,7 @@ export const fetchMessageGet = async (
 
   if (payload.success === "1") {
     const html = `<tr>${payload.data}</tr>`;
+    console.log(html);
     const data = parseMessage(html);
 
     const headers = new Headers(response.headers);
