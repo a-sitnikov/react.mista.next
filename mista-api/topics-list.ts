@@ -2,11 +2,12 @@ import { parse } from "node-html-parser";
 import { undefinedIfEmpty } from "@/lib/utils";
 import { ITopicsListItem } from "./types";
 import { IErrorResponse, IOKResponse } from "@/app/api/types";
+import { fetchMista } from "./utils";
 
 function parseTopics(html: string): ITopicsListItem[] | undefined {
   const root = parse(html);
 
-  const rows = root.querySelectorAll("#topicsList1 tr[data-topic-id]");
+  const rows = root.querySelectorAll("#topicsList tr[data-topic-id]");
   if (rows.length === 0) {
     return undefined;
   }
@@ -42,14 +43,12 @@ export const fetchTopicsList = async (
   searchParams: URLSearchParams,
   cookie?: string | null,
 ) => {
-  const url = `${process.env.MISTA_DOMAIN}${searchParams}`;
-
   const headers = new Headers();
   if (cookie) {
     headers.set("cookie", cookie);
   }
 
-  const response = await fetch(url, { headers });
+  const response = await fetchMista(searchParams.toString(), { headers });
   const html = await response.text();
 
   const respHeaders = new Headers(response.headers);

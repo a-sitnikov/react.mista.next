@@ -1,6 +1,7 @@
 import { HTMLElement, parse } from "node-html-parser";
 import { IMessage } from "./types";
 import { undefinedIfEmpty } from "@/lib/utils";
+import { fetchMista } from "./utils";
 
 export const parseMessage = (html: string | HTMLElement): IMessage => {
   let row: HTMLElement;
@@ -74,8 +75,6 @@ export const fetchMessageGet = async (
   body.append("TOPIC_ID", topicId);
   body.append("MESSAGE_N", String(n));
 
-  const MISTA_DOMAIN = process.env.MISTA_DOMAIN;
-
   const headers = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",
   });
@@ -84,7 +83,7 @@ export const fetchMessageGet = async (
     headers.set("cookie", cookie);
   }
 
-  const response = await fetch(`${MISTA_DOMAIN}/message/get`, {
+  const response = await fetchMista(`/message/get`, {
     method: "POST",
     headers,
     body,

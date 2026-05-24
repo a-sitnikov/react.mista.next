@@ -1,6 +1,7 @@
 import { parse } from "node-html-parser";
 import { ITopic } from "./types";
 import { parseMessage } from "./message-get";
+import { fetchMista } from "./utils";
 
 function parseTopic(html: string, topicId: string): ITopic {
   const root = parse(html);
@@ -30,14 +31,12 @@ function parseTopic(html: string, topicId: string): ITopic {
 }
 
 export const fetchTopic = async (topicId: string, cookie?: string | null) => {
-  const url = `${process.env.MISTA_DOMAIN}/topic/${topicId}`;
-
   const headers = new Headers();
   if (cookie) {
     headers.set("cookie", cookie);
   }
 
-  const response = await fetch(url, { headers });
+  const response = await fetchMista(`/topic/${topicId}`, { headers });
   const html = await response.text();
 
   const fixedHtml = html.replace(/<\/div<\/th>/gi, "<\/div><\/th>");

@@ -1,6 +1,7 @@
 import { parse } from "node-html-parser";
 import { IMessage } from "./types";
 import { parseMessage } from "./message-get";
+import { fetchMista } from "./utils";
 
 const parseMessages = (html: string): IMessage[] => {
   const root = parse(html);
@@ -18,7 +19,6 @@ export const fetchTopicRefresh = async (
   body.append("TOPIC_ID", topicId);
   body.append("LAST_N", lastN);
 
-  const MISTA_DOMAIN = process.env.MISTA_DOMAIN;
   const headers = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",
   });
@@ -27,7 +27,7 @@ export const fetchTopicRefresh = async (
     headers.set("cookie", cookie);
   }
 
-  const response = await fetch(`${MISTA_DOMAIN}/topic/refresh`, {
+  const response = await fetchMista(`/topic/refresh`, {
     method: "POST",
     headers,
     body,
