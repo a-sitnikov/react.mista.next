@@ -1,1 +1,1 @@
-export const DOMAIN = "https:/forum.mista.ru";
+export const DOMAIN = "https://forum.mista.ru";

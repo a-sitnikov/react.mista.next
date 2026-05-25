@@ -60,7 +60,7 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
       tagName="div"
       content={content}
       transform={transform}
-      className={twMerge("p-3", classname)}
+      className={twMerge("p-3 [word-break:break-word]", classname)}
     />
   );
 };

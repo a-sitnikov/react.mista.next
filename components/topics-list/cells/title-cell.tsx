@@ -26,7 +26,7 @@ export const TitleCell: React.FC<IProps> = ({ item }) => (
       {item.count > 20 && (
         <Link
           href={`/topic/${item.id}#F`}
-          className="ml-1 text-muted-foreground"
+          className="ml-1 text-muted-foreground max-md:hidden"
         >
           »
         </Link>

@@ -147,4 +147,13 @@
   a {
     color: var(--color-linkColor);
   }
+
+  @media (max-width: 768px) {
+    [data-radix-popper-content-wrapper] {
+      top: 50% !important;
+      right: auto !important;
+      transform: translate(0, -50%) !important;
+      width: calc(100vw - 1rem) !important;
+    }
+  }
 }
