@@ -15,6 +15,17 @@ export async function GET(
 
   try {
     const { data, headers } = await mistaMessageGet(id, messageId, cookie);
+
+    headers?.append("Access-Control-Allow-Origin", "*");
+    headers?.append(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS",
+    );
+    headers?.append(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization",
+    );
+
     return NextResponse.json(data, { headers });
   } catch (error) {
     const message = (error as Error).message;
@@ -24,4 +35,15 @@ export async function GET(
       return new NextResponse(message, { status: 500 });
     }
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }

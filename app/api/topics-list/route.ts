@@ -11,6 +11,16 @@ export async function GET(req: Request) {
       cookie,
     );
 
+    headers?.append("Access-Control-Allow-Origin", "*");
+    headers?.append(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS",
+    );
+    headers?.append(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization",
+    );
+
     if (!ok) {
       return NextResponse.json({ ok: false, error: data, text }, { headers });
     }
@@ -19,6 +29,17 @@ export async function GET(req: Request) {
   } catch (error) {
     return new NextResponse((error as Error).message, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
 
 export type IAPITopicsList = Awaited<ReturnType<typeof mistaTopicsList>>;
