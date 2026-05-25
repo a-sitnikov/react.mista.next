@@ -20,9 +20,9 @@ export const TitleCell: React.FC<IProps> = ({ item }) => (
       >
         {item.text}
       </Link>
-      {item.isVoting && <span className="agh mx-1">[±]</span>}
-      {item.closed && <span className="agh">Ø</span>}
-      {item.down && <span className="agh">↓</span>}
+      {item.isVoting && <span className="text-muted-foreground ml-1">[±]</span>}
+      {item.closed && <span className="text-muted-foreground ml-1">Ø</span>}
+      {item.down && <span className="text-muted-foreground ml-1">↓</span>}
       {item.count > 20 && (
         <Link
           href={`/topic/${item.id}#F`}

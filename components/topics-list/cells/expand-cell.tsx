@@ -12,11 +12,9 @@ export const ExpandCell: React.FC<IProps> = ({ item }) => (
                 [grid-area:expand]"
   >
     <SquarePlus
-      size={16}
       strokeWidth={1}
       absoluteStrokeWidth
-      color="#666"
-      className="m-auto cursor-pointer"
+      className="m-auto cursor-pointer size-4 max-md:size-5 text-muted-foreground"
     />
   </div>
 );

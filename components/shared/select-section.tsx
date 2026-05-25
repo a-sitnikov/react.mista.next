@@ -29,7 +29,7 @@ export const SelectSection = () => {
     <NativeSelect
       defaultValue={searchParams.get("section") ?? ""}
       onChange={handleSectionChange}
-      className="bg-background"
+      className="bg-background border-borderOuter"
     >
       <NativeSelectOption value="">Все секции</NativeSelectOption>
       {Object.entries(tree).map(([arena, group]) => (

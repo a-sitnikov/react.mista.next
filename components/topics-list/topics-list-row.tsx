@@ -6,6 +6,7 @@ import { UpdatedCell } from "./cells/updated-cell";
 import { ExpandCell } from "./cells/expand-cell";
 import { ITopicsListItem } from "@/mista-api/types";
 import { SectionCell } from "./cells/section-cell";
+import { LastLinkCell } from "./cells/last-link-cell";
 
 interface IProps {
   item: ITopicsListItem;
@@ -32,6 +33,7 @@ export const TopicsListRow: React.FC<IProps> = ({ item }) => {
       <CountCell item={item} />
       <AuthorCell item={item} />
       <UpdatedCell item={item} />
+      <LastLinkCell item={item} />
     </div>
   );
 };
