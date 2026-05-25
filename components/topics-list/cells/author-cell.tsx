@@ -6,11 +6,18 @@ type IProps = {
 };
 
 export const AuthorCell: React.FC<IProps> = ({ item }) => (
-  <div className="p-1.5 border-r text-xs flex [grid-area:author] ">
+  <div
+    className="p-1.5 border-r text-xs flex 
+                max-md:border-b max-md:border-borderOuter
+                max-md:border-r-0
+                max-md:bg-tableHeaderBg
+                max-md:py-0 max-md:text-[13px] max-md:font-semibold
+                [grid-area:author]"
+  >
     <Link
       href={`/user/${item.author.id}`}
       prefetch={false}
-      className="my-auto break-all"
+      className="my-auto break-all text-inherit"
     >
       {item.author.name}
     </Link>

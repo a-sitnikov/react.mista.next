@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useMemo } from "react";
+import { ChangeEventHandler } from "react";
 
 import { useSections } from "@/store/query-hooks";
 import { groupBy } from "@/lib/utils";
@@ -18,30 +18,24 @@ export const SelectSection = () => {
     return null;
   }
 
-  const tree = groupBy(items, (item) => item.forum);
+  const tree = groupBy(items, (item) => item.arena);
 
   const handleSectionChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const newSection = e.target.value;
-
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSection === "") {
-      params.delete("section");
-    } else {
-      params.set("section", newSection);
-    }
-    router.replace(`?${params.toString()}`);
+    router.push(`/section/${newSection}`);
   };
 
   return (
     <NativeSelect
       defaultValue={searchParams.get("section") ?? ""}
       onChange={handleSectionChange}
+      className="bg-background"
     >
       <NativeSelectOption value="">Все секции</NativeSelectOption>
-      {Object.entries(tree).map(([forum, group]) => (
-        <NativeSelectOptGroup key={forum} label={forum}>
+      {Object.entries(tree).map(([arena, group]) => (
+        <NativeSelectOptGroup key={arena} label={arena.toUpperCase()}>
           {group.map((item) => (
-            <NativeSelectOption key={item.id} value={item.code}>
+            <NativeSelectOption key={item.code} value={item.code}>
               {item.name}
             </NativeSelectOption>
           ))}

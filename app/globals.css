@@ -23,7 +23,7 @@
   --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
-  --color-border: var(--border);
+  --color-border: var(--borderInnerColor);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
@@ -47,6 +47,10 @@
 
   /*custom tokens*/
   --color-linkColor: var(--linkColor);
+  --color-linkHover: var(--linkHoverColor);
+  --color-borderInner: var(--borderInnerColor);
+  --color-borderOuter: var(--borderOuterColor);
+  --color-tableHeaderBg: var(--tableHeaderBg);
 }
 
 :root {
@@ -84,8 +88,11 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /*custom colors*/
-  --tableHeaderBg: oklch(0.922 0 0);
+  --tableHeaderBg: #eee;
   --linkColor: #0000cc;
+  --linkHoverColor: #0000dd;
+  --borderInnerColor: #eee;
+  --borderOuterColor: #ccc;
 }
 
 .dark {
@@ -120,6 +127,12 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /*custom colors*/
+  --tableHeaderBg: oklch(0.922 0 0);
+  --linkColor: #0000cc;
+  --borderInnerColor: rgb(100, 100, 100);
+  --borderOuterColor: rgb(100, 100, 100);
 }
 
 @layer base {

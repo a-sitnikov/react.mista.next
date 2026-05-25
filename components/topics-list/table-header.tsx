@@ -18,9 +18,10 @@ export const TableHeader: React.FC<IProps> = ({ isLoading }) => {
       sticky
       z-1
       top-14
-      border
-      bg-(--tableHeaderBg)
+      border border-borderOuter
+      bg-tableHeaderBg
       grid-cols-[50px_30px_auto_30px_120px_155px]
+      max-md:hidden
       "
     >
       <div style={{ letterSpacing: "-1px" }}>Раздел</div>

@@ -22,7 +22,7 @@ function parseTopics(html: string): ITopicsListItem[] | undefined {
       id: attr("data-topic-id"),
       text: row.querySelector(".topic-link")?.text.trim() ?? "",
       count: isNaN(answers) ? 0 : answers,
-      forum: attr("data-arena"),
+      arena: attr("data-arena"),
       section: undefinedIfEmpty(attr("data-section")),
       author: {
         id: attr("data-author-id"),
@@ -31,6 +31,10 @@ function parseTopics(html: string): ITopicsListItem[] | undefined {
       updated: row.querySelector(".updated")?.text.trim() ?? "",
       down:
         row.querySelector("span.status")?.text.trim() === "↓"
+          ? true
+          : undefined,
+      closed:
+        row.querySelector("span.status")?.text.trim() === "Ø"
           ? true
           : undefined,
       isVoting: row.querySelector("span.voting-marker") ? true : undefined,

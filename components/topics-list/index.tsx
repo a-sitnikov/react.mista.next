@@ -24,7 +24,9 @@ const TopicsList_ = () => {
 
   return (
     <div>
-      <SelectSection />
+      <div className="flex items-center gap-4 mb-2">
+        <SelectSection />
+      </div>
       <TableHeader isLoading={isFetching} />
       {items.map((item) => (
         <TopicsListRow key={item.id} item={item} />

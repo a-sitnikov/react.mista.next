@@ -7,11 +7,12 @@ export interface ITopicsListItem {
   id: string;
   text: string;
   count: number;
-  forum: string;
+  arena: string;
   section?: string;
   author: IUser;
   updated: string;
   down?: boolean;
+  closed?: boolean;
   isVoting?: boolean;
   paid?: boolean;
 }
@@ -46,4 +47,10 @@ export type ITopicInfo = {
 export type ITopic = {
   info: ITopicInfo;
   items: IMessage[];
+};
+
+export type ISection = {
+  code: string;
+  arena: string;
+  name: string;
 };

@@ -6,7 +6,11 @@ type IProps = {
 };
 
 export const ExpandCell: React.FC<IProps> = ({ item }) => (
-  <div className="text-xs flex [grid-area:expand]">
+  <div
+    className="text-xs flex 
+                max-md:border-r
+                [grid-area:expand]"
+  >
     <SquarePlus
       size={16}
       strokeWidth={1}
