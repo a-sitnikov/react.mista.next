@@ -39,7 +39,7 @@ function parseTopics(html: string): ITopicsListItem[] | undefined {
   });
 }
 
-export const fetchTopicsList = async (
+export const mistaTopicsList = async (
   searchParams: URLSearchParams,
   cookie?: string | null,
 ) => {

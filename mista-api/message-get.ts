@@ -66,7 +66,7 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
   };
 };
 
-export const fetchMessageGet = async (
+export const mistaMessageGet = async (
   topicId: string,
   n: number | string,
   cookie?: string | null,
@@ -104,7 +104,6 @@ export const fetchMessageGet = async (
 
   if (payload.success === "1") {
     const html = `<tr>${payload.data}</tr>`;
-    console.log(html);
     const data = parseMessage(html);
 
     const headers = new Headers(response.headers);

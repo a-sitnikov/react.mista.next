@@ -4,6 +4,7 @@ import { MsgTooltipHeader } from "./msg-tooltip-header";
 import { getCachedTopicData } from "@/store/query-hooks/use-topic";
 import { useQueryClient } from "@tanstack/react-query";
 import { IMessage } from "@/mista-api/types";
+import { fetchMessage } from "@/app/api/utils";
 
 interface IProps {
   topicId: string;
@@ -13,30 +14,39 @@ interface IProps {
 
 export const MsgTooltipContent: React.FC<IProps> = ({ topicId, n, close }) => {
   // const [info, setInfo] = useState<ITopicInfo>();
-  // const [item, setItem] = useState<IMessage>();
+  const [item, setItem] = useState<IMessage>();
 
   const queryClient = useQueryClient();
 
-  // const getTopicData = useEffectEvent(() => {
-  //   const topicData = getCachedTopicData(queryClient, topicId);
-  //   if (!topicData) {
-  //     return;
-  //   }
+  const getTopicData = useEffectEvent(async () => {
+    const topicData = getCachedTopicData(queryClient, topicId);
 
-  //   setInfo(topicData.info);
-
-  //   const itemN = topicData.items.find((val) => val.n === n);
-  //   setItem(itemN);
-  // });
+    if (topicData) {
+      return topicData?.items.find((val) => val.n === n);
+    } else {
+      return fetchMessage(topicId, String(n));
+    }
+  });
 
   useEffect(() => {
-    //getTopicData();
+    getTopicData().then((itemN) => {
+      if (!itemN) {
+        setItem({
+          text: "Message not found",
+          user: { id: "", name: "" },
+          n,
+          date: "",
+        });
+      } else {
+        setItem(itemN);
+      }
+    });
   }, [topicId, n]);
 
   return (
     <div>
-      {/* <MsgTooltipHeader close={close} item={item} />
-      <MsgTooltipBody item={item} topicId={topicId} /> */}
+      <MsgTooltipHeader close={close} item={item} />
+      <MsgTooltipBody item={item} topicId={topicId} />
     </div>
   );
 };

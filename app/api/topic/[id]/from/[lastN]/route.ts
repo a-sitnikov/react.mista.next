@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchTopicRefresh } from "@/mista-api/topic-refresh";
+import { mistaTopicRefresh } from "@/mista-api/topic-refresh";
 
 interface IParams {
   id: string;
@@ -15,7 +15,7 @@ export async function GET(
   const { id, lastN = "-1" } = await params;
 
   try {
-    const { data, headers } = await fetchTopicRefresh(id, lastN, cookie);
+    const { data, headers } = await mistaTopicRefresh(id, lastN, cookie);
     return NextResponse.json(data, { headers });
   } catch (error) {
     return new NextResponse((error as Error).message, { status: 500 });

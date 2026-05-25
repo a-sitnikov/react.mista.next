@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { fetchTopicsList } from "@/mista-api/topics-list";
+import { mistaTopicsList } from "@/mista-api/topics-list";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const cookie = req.headers.get("cookie");
 
   try {
-    const { ok, data, text, headers } = await fetchTopicsList(
+    const { ok, data, text, headers } = await mistaTopicsList(
       url.searchParams,
       cookie,
     );
@@ -21,4 +21,4 @@ export async function GET(req: Request) {
   }
 }
 
-export type IAPITopicsList = Awaited<ReturnType<typeof fetchTopicsList>>;
+export type IAPITopicsList = Awaited<ReturnType<typeof mistaTopicsList>>;

@@ -30,7 +30,7 @@ function parseTopic(html: string, topicId: string): ITopic {
   };
 }
 
-export const fetchTopic = async (topicId: string, cookie?: string | null) => {
+export const mistaTopic = async (topicId: string, cookie?: string | null) => {
   const headers = new Headers();
   if (cookie) {
     headers.set("cookie", cookie);

@@ -10,7 +10,7 @@ const parseMessages = (html: string): IMessage[] => {
   return rows.map(parseMessage);
 };
 
-export const fetchTopicRefresh = async (
+export const mistaTopicRefresh = async (
   topicId: string,
   lastN: string,
   cookie?: string | null,

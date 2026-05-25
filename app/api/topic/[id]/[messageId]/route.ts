@@ -1,4 +1,4 @@
-import { fetchMessageGet } from "@/mista-api/message-get";
+import { mistaMessageGet } from "@/mista-api/message-get";
 import { NextResponse } from "next/server";
 
 interface IParams {
@@ -14,7 +14,7 @@ export async function GET(
   const cookie = req.headers.get("cookie");
 
   try {
-    const { data, headers } = await fetchMessageGet(id, messageId, cookie);
+    const { data, headers } = await mistaMessageGet(id, messageId, cookie);
     return NextResponse.json(data, { headers });
   } catch (error) {
     const message = (error as Error).message;

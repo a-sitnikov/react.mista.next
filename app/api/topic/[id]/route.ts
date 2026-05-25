@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchTopic } from "@/mista-api/topic";
+import { mistaTopic } from "@/mista-api/topic";
 
 export async function GET(
   req: Request,
@@ -9,7 +9,7 @@ export async function GET(
   const cookie = req.headers.get("cookie");
 
   try {
-    const { data, headers } = await fetchTopic(id, cookie);
+    const { data, headers } = await mistaTopic(id, cookie);
 
     return NextResponse.json(data, { headers });
   } catch (error) {
