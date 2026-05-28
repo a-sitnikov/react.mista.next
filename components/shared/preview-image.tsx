@@ -8,13 +8,7 @@ interface IProps
   fullSrc?: string;
 }
 
-export const PreviewImage: React.FC<IProps> = ({
-  src,
-  fullSrc,
-  alt,
-  children,
-  ...props
-}) => {
+export const PreviewImage: React.FC<IProps> = ({ src, fullSrc, alt }) => {
   const srcWithDomain = (() => {
     if (typeof src === "string" && src?.startsWith("/")) {
       return `${DOMAIN}/${src}`;

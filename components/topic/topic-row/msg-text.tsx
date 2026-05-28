@@ -5,7 +5,7 @@ import { LinkToPost } from "@/components/shared/link-to-post";
 import { CustomLink } from "@/components/shared/custom-link";
 import { twMerge } from "tailwind-merge";
 import { IMessage } from "@/mista-api/types";
-import { PhotoProvider, PhotoView } from "react-photo-view";
+import { PhotoProvider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import PollChart from "./poll-chart";
 import { pollVariants } from "../constants";
