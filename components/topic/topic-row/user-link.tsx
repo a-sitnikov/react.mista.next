@@ -20,8 +20,9 @@ export const UserLink: React.FC<IProps> = ({
       className={twMerge(
         "font-bold px-1 text-foreground break-all",
         isAuthor && "bg-amber-400 rounded-xs",
-        className
+        className,
       )}
+      prefetch={false}
     >
       {name}
     </Link>
