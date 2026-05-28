@@ -9,6 +9,7 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import PollChart from "./poll-chart";
 import { pollVariants } from "../constants";
+import { PreviewImage } from "@/components/shared/preview-image";
 
 interface IProps {
   item: IMessage;
@@ -42,6 +43,13 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, className }) => {
       case "pre":
         return <Code>{children}</Code>;
 
+      case "img":
+        return (
+          <PreviewImage src={node.getAttribute("src") ?? ""}>
+            {children}
+          </PreviewImage>
+        );
+
       default:
         return undefined;
     }
@@ -51,43 +59,42 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, className }) => {
     <div
       className={twMerge("flex flex-col gap-2 p-3 overflow-hidden", className)}
     >
-      {item.poll && <PollChart items={item.poll} />}
-      {item.text && (
-        <Interweave
-          tagName="div"
-          content={content}
-          transform={transform}
-          className={
-            "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap"
-          }
-        />
-      )}
-      {item.voting && (
-        <div
-          className="font-semibold"
-          data-u={item.voting.variant}
-          style={{
-            color: pollVariants[parseInt(item.voting.variant) - 1].color,
-          }}
-        >
-          {`${item.voting.variant}. ${item.voting.text}`}
-        </div>
-      )}
-      {item.imgs && (
-        <div className="flex flex-wrap gap-2 items-start">
-          <PhotoProvider>
+      <PhotoProvider>
+        {item.poll && <PollChart items={item.poll} />}
+        {item.text && (
+          <Interweave
+            tagName="div"
+            content={content}
+            transform={transform}
+            className={
+              "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap"
+            }
+          />
+        )}
+        {item.voting && (
+          <div
+            className="font-semibold"
+            data-u={item.voting.variant}
+            style={{
+              color: pollVariants[parseInt(item.voting.variant) - 1].color,
+            }}
+          >
+            {`${item.voting.variant}. ${item.voting.text}`}
+          </div>
+        )}
+        {item.imgs && (
+          <div className="flex flex-wrap gap-2 items-start">
             {item.imgs?.map((img, idx) => (
-              <PhotoView src={img.replace("_thumb", "")} key={idx}>
-                <img
-                  src={img}
-                  alt=""
-                  className="max-w-full max-h-50 cursor-pointer"
-                />
-              </PhotoView>
+              <PreviewImage
+                src={img}
+                fullSrc={img.replace("_thumb", "")}
+                key={idx}
+                className="max-w-full max-h-50 cursor-pointer"
+              />
             ))}
-          </PhotoProvider>
-        </div>
-      )}
+          </div>
+        )}
+      </PhotoProvider>
     </div>
   );
 };
