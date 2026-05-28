@@ -58,12 +58,15 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
   };
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <Interweave
         tagName="div"
         content={content}
         transform={transform}
-        className={twMerge("p-3 [word-break:break-word]", classname)}
+        className={twMerge(
+          "p-3 [word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap",
+          classname,
+        )}
       />
       {item.imgs && (
         <div className="p-3 pt-0 flex flex-wrap gap-2 items-start">
