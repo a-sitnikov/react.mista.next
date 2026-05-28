@@ -65,6 +65,7 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, className }) => {
       {item.voting && (
         <div
           className="font-semibold"
+          data-u={item.voting.variant}
           style={{
             color: pollVariants[parseInt(item.voting.variant) - 1].color,
           }}

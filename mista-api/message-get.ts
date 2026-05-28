@@ -39,9 +39,16 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
 
   const pollEl = row.querySelectorAll("table.tableVotingResults tr.variant");
   const poll = pollEl.map((pollRow) => {
-    const rawText = pollRow.querySelector("td.text a")?.text.trim() ?? "";
-    const numberMatch = rawText.match(/^(\d+)\.\s*/);
-    const number = numberMatch ? parseInt(numberMatch[1], 10) : 0;
+    const linkEl = pollRow.querySelector("td.text a");
+    const rawText = linkEl?.text.trim() ?? "";
+
+    const number =
+      linkEl
+        ?.getAttribute("class")
+        ?.split(".")
+        .find((cn) => cn.startsWith("voting-variant"))
+        ?.replace("voting-variant", "") ?? "1";
+
     const text = rawText.replace(/^\d+\.\s*/, "").trim();
 
     const resultText = pollRow.querySelector("td.result")?.text.trim() ?? "";
@@ -49,7 +56,12 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
     const percentage = resultMatch ? parseInt(resultMatch[1], 10) : 0;
     const votes = resultMatch ? parseInt(resultMatch[2], 10) : 0;
 
-    return { number, text, percentage, votes };
+    return {
+      number: parseInt(number, 10),
+      text,
+      percentage,
+      votes,
+    };
   });
 
   return {
@@ -62,7 +74,7 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
     text,
     voting: votingVariant,
     imgs,
-    poll: undefinedIfEmpty(poll),
+    poll: undefinedIfEmpty(poll?.sort((a, b) => a.number - b.number)),
   };
 };
 
