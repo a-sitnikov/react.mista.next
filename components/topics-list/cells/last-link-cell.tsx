@@ -1,5 +1,5 @@
 import { ITopicsListItem } from "@/mista-api/types";
-import { ChevronRight, ChevronsRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -14,7 +14,7 @@ export const LastLinkCell: React.FC<IProps> = ({ item }) => (
                 [grid-area:lastlink]"
   >
     <Link href={`/topic/${item.id}#F`} className="text-muted-foreground">
-      <ChevronRight />
+      <ChevronRight strokeWidth={1} />
     </Link>
   </div>
 );

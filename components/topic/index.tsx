@@ -1,7 +1,7 @@
 "use client";
 
 import { useTopic } from "@/store/query-hooks/use-topic";
-import { use } from "react";
+import { use, useEffect } from "react";
 import { TopicInfo } from "./topic-info";
 import { TopicRow } from "./topic-row";
 
@@ -12,6 +12,18 @@ interface IProps {
 export default function Topic({ params }: IProps) {
   const { id } = use(params);
   const { data } = useTopic({ id });
+
+  useEffect(() => {
+    if (!data) return;
+
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+
+    const element = document.getElementById(hash);
+    if (!element) return;
+
+    element.scrollIntoView({ behavior: "instant" });
+  }, [data]);
 
   if (!data) {
     return null;
@@ -28,6 +40,7 @@ export default function Topic({ params }: IProps) {
           isAuthor={item.user.id === data.info.author.id}
         />
       ))}
+      <div id="F" />
     </div>
   );
 }
