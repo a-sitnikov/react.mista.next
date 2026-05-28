@@ -17,7 +17,7 @@ export interface ITopicsListItem {
   paid?: boolean;
 }
 
-export type PollItem = {
+export type IPollItem = {
   number: number;
   text: string;
   percentage: number;
@@ -31,10 +31,10 @@ export type IMessage = {
   text: string;
   voting?: {
     text: string;
-    variant?: string;
+    variant: string;
   };
   imgs?: string[];
-  poll?: PollItem[];
+  poll?: IPollItem[];
 };
 
 export type ITopicInfo = {

@@ -13,6 +13,7 @@ export const UserInfo: React.FC<IProps> = ({ item, isAuthor }) => {
       className="[grid-area:user] border-r py-3 px-2 text-right
                 max-md:flex max-md:items-center max-md:justify-between max-md:gap-2
                 max-md:py-0.5 max-md:px-1
+                max-md:text-[13px]
                 max-md:bg-tableHeaderBg
                 max-md:border-b max-md:border-borderOuter
                 max-md:sticky max-md:top-14"

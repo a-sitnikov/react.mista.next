@@ -7,6 +7,8 @@ import { twMerge } from "tailwind-merge";
 import { IMessage } from "@/mista-api/types";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import PollChart from "./poll-chart";
+import { pollVariants } from "../constants";
 
 interface IProps {
   item: IMessage;
@@ -40,36 +42,37 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
       case "pre":
         return <Code>{children}</Code>;
 
-      // case "int_img": {
-      //   const idx = node.getAttribute("idx");
-      //   return (
-      //     <InternalImage
-      //       topicId={topicId}
-      //       topicDate={topicDate}
-      //       messageNumber={messageNumber}
-      //       idx={idx}
-      //     />
-      //   );
-      //}
-
       default:
         return undefined;
     }
   };
 
   return (
-    <div className="overflow-hidden">
-      <Interweave
-        tagName="div"
-        content={content}
-        transform={transform}
-        className={twMerge(
-          "p-3 [word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap",
-          classname,
-        )}
-      />
+    <div className="flex flex-col gap-2 p-3 overflow-hidden">
+      {item.poll && <PollChart items={item.poll} />}
+      {item.text && (
+        <Interweave
+          tagName="div"
+          content={content}
+          transform={transform}
+          className={twMerge(
+            "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap",
+            classname,
+          )}
+        />
+      )}
+      {item.voting && (
+        <div
+          className="font-semibold"
+          style={{
+            color: pollVariants[parseInt(item.voting.variant) - 1].color,
+          }}
+        >
+          {`${item.voting.variant}. ${item.voting.text}`}
+        </div>
+      )}
       {item.imgs && (
-        <div className="p-3 pt-0 flex flex-wrap gap-2 items-start">
+        <div className="flex flex-wrap gap-2 items-start">
           <PhotoProvider>
             {item.imgs?.map((img, idx) => (
               <PhotoView src={img.replace("_thumb", "")} key={idx}>

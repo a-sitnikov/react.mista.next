@@ -26,7 +26,7 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
         variant:
           [...(votingEl.getAttribute("class")?.split(" ") ?? [])]
             .find((c) => c.startsWith("voting-variant"))
-            ?.replace("voting-variant", "") ?? undefined,
+            ?.replace("voting-variant", "") ?? "1",
       }
     : undefined;
 
