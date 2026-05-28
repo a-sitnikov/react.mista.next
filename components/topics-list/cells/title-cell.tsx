@@ -13,6 +13,7 @@ export const TitleCell: React.FC<IProps> = ({ item }) => (
         href={`/topic/${item.id}`}
         prefetch={false}
         className={twMerge(
+          "[word-break:break-word]",
           "max-md:text-[16px]",
           "hover:text-linkHover",
           item.count >= 100 && "font-semibold",
