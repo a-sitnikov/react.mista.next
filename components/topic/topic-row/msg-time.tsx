@@ -5,5 +5,5 @@ interface IProps {
 }
 
 export const MsgTime: React.FC<IProps> = ({ item }) => {
-  return <div className="text-sm">{`${item.n} - ${item.date}`}</div>;
+  return <div className="text-sm text-end">{`${item.n} - ${item.date}`}</div>;
 };

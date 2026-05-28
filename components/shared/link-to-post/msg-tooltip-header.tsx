@@ -14,7 +14,7 @@ export const MsgTooltipHeader: React.FC<IProps> = ({ item, close }) => {
 
   return (
     <div className="flex items-center justify-between gap-2 border-b p-1 pl-2">
-      <div className="flex gap-1 items-center">
+      <div className="flex gap-1 items-center justify-between grow">
         <UserLink id={item.user.id} name={item.user.name} isAuthor={false} />
         <MsgTime item={item} />
       </div>
