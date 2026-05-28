@@ -20,7 +20,6 @@ export const TopicsListRow: React.FC<IProps> = ({ item }) => {
       [grid-template-areas:'arena_expand_title_count_author_updated']      
       max-md:grid-cols-[40px_1fr_1fr_20px_40px]
       max-md:[grid-template-areas:'author_author_section_section_section''expand_title_title_title_lastlink''updated_updated_updated_count_count']
-      max-md:mb-1.5
       max-md:border max-md:border-borderOuter
       border-b
       bg-background

@@ -52,7 +52,7 @@ export const mistaTopicsList = async (
     headers.set("cookie", cookie);
   }
 
-  const response = await fetchMista(searchParams.toString(), { headers });
+  const response = await fetchMista(`/${searchParams.toString()}`, { headers });
   const html = await response.text();
 
   const respHeaders = new Headers(response.headers);
