@@ -6,18 +6,10 @@ import { useTopicsList } from "@/store/query-hooks";
 import { SelectSection } from "@/components/shared/select-section";
 import { Suspense } from "react";
 import ModalFrame from "../shared/modal-frame";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-} from "../ui/pagination";
-import { useSearchParams } from "next/navigation";
+import { TablePages } from "./table-pages";
 
 const TopicsList_ = () => {
   const { data, isFetching } = useTopicsList();
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page") ?? 1);
 
   if (!data) {
     return null;
@@ -42,23 +34,7 @@ const TopicsList_ = () => {
           <TopicsListRow key={item.id} item={item} />
         ))}
       </div>
-      <Pagination>
-        <PaginationContent>
-          {Array.from({ length: 5 }).map((_, i) => {
-            const page = i + 1;
-            return (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  href={page === 1 ? "/" : `/?page=${page}`}
-                  isActive={page === currentPage}
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            );
-          })}
-        </PaginationContent>
-      </Pagination>
+      <TablePages />
     </div>
   );
 };
