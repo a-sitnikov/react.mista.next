@@ -5,6 +5,8 @@ import { LinkToPost } from "@/components/shared/link-to-post";
 import { CustomLink } from "@/components/shared/custom-link";
 import { twMerge } from "tailwind-merge";
 import { IMessage } from "@/mista-api/types";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 interface IProps {
   item: IMessage;
@@ -56,11 +58,28 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
   };
 
   return (
-    <Interweave
-      tagName="div"
-      content={content}
-      transform={transform}
-      className={twMerge("p-3 [word-break:break-word]", classname)}
-    />
+    <div>
+      <Interweave
+        tagName="div"
+        content={content}
+        transform={transform}
+        className={twMerge("p-3 [word-break:break-word]", classname)}
+      />
+      {item.imgs && (
+        <div className="p-3 pt-0 flex flex-wrap gap-2 items-start">
+          <PhotoProvider>
+            {item.imgs?.map((img, idx) => (
+              <PhotoView src={img.replace("_thumb", "")} key={idx}>
+                <img
+                  src={img}
+                  alt=""
+                  className="max-w-full max-h-50 cursor-pointer"
+                />
+              </PhotoView>
+            ))}
+          </PhotoProvider>
+        </div>
+      )}
+    </div>
   );
 };
