@@ -13,7 +13,7 @@ export const MsgTooltipBody: React.FC<IProps> = ({ item, topicId }) => {
     <MsgText
       item={item}
       topicId={topicId}
-      classname="max-h-130 py-2 overflow-y-auto overflow-x-hidden break-all scrollbar-thin"
+      className="max-h-[80vh] py-2 overflow-y-auto overflow-x-hidden break-all scrollbar-thin"
     />
   );
 };

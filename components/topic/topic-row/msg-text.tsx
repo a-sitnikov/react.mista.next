@@ -13,10 +13,10 @@ import { pollVariants } from "../constants";
 interface IProps {
   item: IMessage;
   topicId: string;
-  classname?: string;
+  className?: string;
 }
 
-export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
+export const MsgText: React.FC<IProps> = ({ item, topicId, className }) => {
   const { prepareHtml } = usePrepareHtml();
 
   const content = prepareHtml(item.text, topicId);
@@ -48,17 +48,18 @@ export const MsgText: React.FC<IProps> = ({ item, topicId, classname }) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 p-3 overflow-hidden">
+    <div
+      className={twMerge("flex flex-col gap-2 p-3 overflow-hidden", className)}
+    >
       {item.poll && <PollChart items={item.poll} />}
       {item.text && (
         <Interweave
           tagName="div"
           content={content}
           transform={transform}
-          className={twMerge(
-            "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap",
-            classname,
-          )}
+          className={
+            "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap"
+          }
         />
       )}
       {item.voting && (
