@@ -1,34 +1,37 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import { QueryKeys } from "./types";
-import { useSearchParams } from "next/navigation";
 import { IAPITopicsList } from "@/app/api/topics-list/route";
 
 interface IProps {
-  section?: string;
+  page?: string;
   arena?: string;
+  section?: string;
 }
 
 export const useTopicsList = <TError = Error, TData = IAPITopicsList>(
-  { section, arena }: IProps,
+  { page, section, arena }: IProps,
   options?: Omit<
     UseQueryOptions<
       IAPITopicsList,
       TError,
       TData,
-      [QueryKeys.TopicsList, object]
+      [
+        QueryKeys.TopicsList,
+        string | undefined,
+        string | undefined,
+        string | undefined,
+      ]
     >,
     "queryKey" | "queryFn"
   >,
 ) => {
-  const searchParams = useSearchParams();
-  const objectKey = Object.fromEntries(searchParams);
-  if (section) objectKey.section = section;
-  if (arena) objectKey.arena = arena;
-
   return useQuery({
-    queryKey: [QueryKeys.TopicsList, objectKey],
+    queryKey: [QueryKeys.TopicsList, page, arena, section],
     queryFn: async () => {
-      const newSearchParams = new URLSearchParams(objectKey);
+      const newSearchParams = new URLSearchParams();
+      if (page) newSearchParams.set("page", page);
+      if (arena) newSearchParams.set("arena", arena);
+      if (section) newSearchParams.set("section", section);
 
       const resp = await fetch(
         `/api/topics-list?${newSearchParams.toString()}`,

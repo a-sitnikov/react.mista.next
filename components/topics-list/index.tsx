@@ -7,11 +7,20 @@ import { SelectSection } from "@/components/shared/select-section";
 import { Suspense } from "react";
 import ModalFrame from "../shared/modal-frame";
 import { TablePages } from "./table-pages";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 const TopicsList_ = () => {
   const { section, arena } = useParams<{ section?: string; arena?: string }>();
-  const { data, isFetching } = useTopicsList({ section, arena });
+  const searchParams = useSearchParams();
+
+  const { data, isFetching } = useTopicsList(
+    {
+      page: searchParams.get("page") ?? undefined,
+      arena,
+      section,
+    },
+    { enabled: true },
+  );
 
   if (!data) {
     return null;
