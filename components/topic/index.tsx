@@ -1,6 +1,6 @@
 "use client";
 
-import { useTopic } from "@/store/query-hooks/use-topic";
+import { useTopicMessages } from "@/store/query-hooks/use-topic-messages";
 import { use, useEffect } from "react";
 import { TopicInfo } from "./topic-info";
 import { TopicRow } from "./topic-row";
@@ -9,9 +9,9 @@ interface IProps {
   params: Promise<{ id: string }>;
 }
 
-export default function Topic({ params }: IProps) {
+export const Topic: React.FC<IProps> = ({ params }) => {
   const { id } = use(params);
-  const { data } = useTopic({ id });
+  const { data } = useTopicMessages({ id });
 
   useEffect(() => {
     if (!data) return;
@@ -43,4 +43,4 @@ export default function Topic({ params }: IProps) {
       <div id="F" />
     </div>
   );
-}
+};

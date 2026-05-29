@@ -13,14 +13,11 @@ const TopicsList_ = () => {
   const { section, arena } = useParams<{ section?: string; arena?: string }>();
   const searchParams = useSearchParams();
 
-  const { data, isFetching } = useTopicsList(
-    {
-      page: searchParams.get("page") ?? undefined,
-      arena,
-      section,
-    },
-    { enabled: true },
-  );
+  const { data, isFetching } = useTopicsList({
+    page: searchParams.get("page") ?? undefined,
+    arena,
+    section,
+  });
 
   if (!data) {
     return null;

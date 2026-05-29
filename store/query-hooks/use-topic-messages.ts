@@ -10,7 +10,7 @@ interface IProps {
   id: string;
 }
 
-export const useTopic = <TError = Error, TData = ITopic>(
+export const useTopicMessages = <TError = Error, TData = ITopic>(
   { id }: IProps,
   options?: Omit<
     UseQueryOptions<ITopic, TError, TData, [QueryKeys.TopicMessages, string]>,

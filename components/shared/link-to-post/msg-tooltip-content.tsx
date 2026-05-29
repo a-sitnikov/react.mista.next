@@ -1,7 +1,7 @@
 import { useEffect, useEffectEvent, useState } from "react";
 import { MsgTooltipBody } from "./msg-tooltip-body";
 import { MsgTooltipHeader } from "./msg-tooltip-header";
-import { getCachedTopicData } from "@/store/query-hooks/use-topic";
+import { getCachedTopicData } from "@/store/query-hooks/use-topic-messages";
 import { useQueryClient } from "@tanstack/react-query";
 import { IMessage } from "@/mista-api/types";
 import { fetchMessage } from "@/app/api/utils";

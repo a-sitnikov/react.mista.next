@@ -17,7 +17,11 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
   const userId = userEl?.getAttribute("data-user-id") ?? "";
   const date = row.querySelector(".message-date")?.text?.trim() ?? "";
   const time = row.querySelector(".message-time")?.text?.trim() ?? "";
-  const text = row.querySelector(".message-text")?.innerHTML?.trim() ?? "";
+  const text =
+    row
+      .querySelector(".message-text")
+      ?.innerHTML?.trim()
+      ?.replaceAll("\r", "") ?? "";
 
   const votingEl = row.querySelector("div[class*='voting-variant']");
   const votingVariant = votingEl

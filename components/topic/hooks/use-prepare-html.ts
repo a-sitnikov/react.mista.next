@@ -15,21 +15,11 @@ export const usePrepareHtml = () => {
       .replace(/<\/1[CС]>/gi, "</code>"); //</1C>
   };
 
-  const processImages = (text: string) => {
-    const regexp = /\[IMG_(\d*)\]/gi; // ([IMG_1])
-
-    return text.replace(regexp, (res, ...segments) => {
-      const idx = segments[0];
-      return `<int_img idx='${idx}'></int_img>`;
-    });
-  };
-
   const prepareHtml = (text: string, topicId: string) => {
     if (!text) return text;
 
-    let newtext = processCode1C(text);
-    newtext = processLinksToPosts(newtext, topicId);
-    return processImages(newtext);
+    const newtext = processCode1C(text);
+    return processLinksToPosts(newtext, topicId);
   };
 
   return { prepareHtml };

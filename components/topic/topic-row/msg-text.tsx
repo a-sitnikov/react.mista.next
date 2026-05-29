@@ -1,100 +1,66 @@
-import { Interweave, InterweaveProps } from "interweave";
-import { usePrepareHtml } from "../hooks/use-prepare-html";
-import { Code } from "@/components/shared/code";
-import { LinkToPost } from "@/components/shared/link-to-post";
 import { CustomLink } from "@/components/shared/custom-link";
-import { twMerge } from "tailwind-merge";
-import { IMessage } from "@/mista-api/types";
-import { PhotoProvider } from "react-photo-view";
-import "react-photo-view/dist/react-photo-view.css";
-import PollChart from "./poll-chart";
-import { pollVariants } from "../constants";
+import { LinkToPost } from "@/components/shared/link-to-post";
 import { PreviewImage } from "@/components/shared/preview-image";
+import { Code } from "lucide-react";
+import parse, { DOMNode, domToReact, Element } from "html-react-parser";
+import { usePrepareHtml } from "../hooks/use-prepare-html";
 
 interface IProps {
-  item: IMessage;
+  text: string;
   topicId: string;
-  className?: string;
 }
 
-export const MsgText: React.FC<IProps> = ({ item, topicId, className }) => {
+export const MsgText: React.FC<IProps> = ({ text, topicId }) => {
   const { prepareHtml } = usePrepareHtml();
+  const content = prepareHtml(text, topicId);
 
-  const content = prepareHtml(item.text, topicId);
+  const options = {
+    replace: (node: unknown) => {
+      if (!(node instanceof Element)) return;
 
-  const transform: InterweaveProps["transform"] = (node, children) => {
-    const tagName = node.tagName.toLowerCase();
-    switch (tagName) {
-      case "a": {
-        const href = node.getAttribute("href") ?? "";
-        return (
-          <CustomLink href={href} parentText={item.text}>
-            {children}
-          </CustomLink>
-        );
+      const tag = node.name.toLowerCase();
+
+      switch (tag) {
+        case "a": {
+          const href = node.attribs?.href ?? "";
+          return (
+            <CustomLink href={href} parentText={text}>
+              {domToReact(node.children as unknown as DOMNode[], options)}
+            </CustomLink>
+          );
+        }
+
+        case "link": {
+          const n = parseInt(node.attribs?.["data-number"] ?? "0");
+          return <LinkToPost topicId={topicId} n={n} />;
+        }
+
+        case "code":
+        case "pre":
+          return (
+            <Code>
+              {domToReact(node.children as unknown as DOMNode[], options)}
+            </Code>
+          );
+
+        case "img": {
+          const src = node.attribs?.src ?? "";
+          return (
+            <PreviewImage src={src}>
+              {domToReact(node.children as unknown as DOMNode[], options)}
+            </PreviewImage>
+          );
+        }
+
+        default:
+          return undefined;
       }
-
-      case "link": {
-        const n = parseInt(node.getAttribute("data-number") ?? "0");
-        return <LinkToPost topicId={topicId} n={n} />;
-      }
-
-      case "code":
-      case "pre":
-        return <Code>{children}</Code>;
-
-      case "img":
-        return (
-          <PreviewImage src={node.getAttribute("src") ?? ""}>
-            {children}
-          </PreviewImage>
-        );
-
-      default:
-        return undefined;
-    }
+    },
   };
 
   return (
-    <div
-      className={twMerge("flex flex-col gap-2 p-3 overflow-hidden", className)}
-    >
-      <PhotoProvider>
-        {item.poll && <PollChart items={item.poll} />}
-        {item.text && (
-          <Interweave
-            tagName="div"
-            content={content}
-            transform={transform}
-            className={
-              "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap"
-            }
-          />
-        )}
-        {item.voting && (
-          <div
-            className="font-semibold"
-            data-u={item.voting.variant}
-            style={{
-              color: pollVariants[parseInt(item.voting.variant) - 1].color,
-            }}
-          >
-            {`${item.voting.variant}. ${item.voting.text}`}
-          </div>
-        )}
-        {item.imgs && (
-          <div className="flex flex-wrap gap-2 items-start">
-            {item.imgs?.map((img, idx) => (
-              <PreviewImage
-                src={img}
-                fullSrc={img.replace("_thumb", "")}
-                key={idx}
-                className="max-w-full max-h-50 cursor-pointer"
-              />
-            ))}
-          </div>
-        )}
-      </PhotoProvider>
+    <div className="[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap">
+      {parse(content, options)}
     </div>
   );
 };
