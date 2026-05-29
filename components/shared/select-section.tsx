@@ -7,11 +7,11 @@ import {
   NativeSelectOptGroup,
   NativeSelectOption,
 } from "../ui/native-select";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export const SelectSection = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const { section } = useParams<{ section?: string }>();
 
   const { data: items = [], isError } = useSections();
   if (isError) {
@@ -22,14 +22,18 @@ export const SelectSection = () => {
 
   const handleSectionChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const newSection = e.target.value;
-    router.push(`/section/${newSection}`);
+    if (!newSection) {
+      router.push("/");
+    } else {
+      router.push(`/section/${newSection}`);
+    }
   };
 
   return (
     <NativeSelect
-      defaultValue={searchParams.get("section") ?? ""}
+      value={section}
       onChange={handleSectionChange}
-      className="bg-background border-borderOuter"
+      className="bg-background border-borderOuter w-60"
     >
       <NativeSelectOption value="">Все секции</NativeSelectOption>
       {Object.entries(tree).map(([arena, group]) => (

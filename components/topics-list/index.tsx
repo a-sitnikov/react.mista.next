@@ -11,7 +11,6 @@ import { useParams } from "next/navigation";
 
 const TopicsList_ = () => {
   const { section, arena } = useParams<{ section?: string; arena?: string }>();
-  console.log({ section, arena });
   const { data, isFetching } = useTopicsList({ section, arena });
 
   if (!data) {
