@@ -30,7 +30,11 @@ const TopicsList_ = () => {
       <div className="flex items-center gap-4">
         <SelectSection />
       </div>
-      <div className="flex flex-col max-md:gap-1.5">
+      <div
+        className="flex flex-col 
+                  md:border border-borderOuter
+                  max-md:gap-1.5"
+      >
         <TableHeader isLoading={isFetching} />
         {items.map((item) => (
           <TopicsListRow key={item.id} item={item} />

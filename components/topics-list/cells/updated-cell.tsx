@@ -7,7 +7,6 @@ type IProps = {
 export const UpdatedCell: React.FC<IProps> = ({ item }) => (
   <div
     className="p-1.5 text-xs flex
-                border-r border-borderOuter 
                 max-md:border-t 
                 max-md:border-r-0
                 max-md:bg-tableHeaderBg

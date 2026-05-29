@@ -30,7 +30,7 @@ export default function Topic({ params }: IProps) {
   }
 
   return (
-    <div className="border">
+    <div className="border md:border-borderOuter">
       <TopicInfo info={data.info} />
       {data.items.map((item) => (
         <TopicRow

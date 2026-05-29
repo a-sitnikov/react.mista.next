@@ -7,7 +7,7 @@ type IProps = {
 export const ArenaCell: React.FC<IProps> = ({ item }) => (
   <div
     className="text-xs flex p-1.5 
-      border-l border-r border-l-borderOuter 
+      border-r
       max-md:hidden
       [grid-area:arena]"
   >
