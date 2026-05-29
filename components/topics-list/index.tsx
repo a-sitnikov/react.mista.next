@@ -7,9 +7,12 @@ import { SelectSection } from "@/components/shared/select-section";
 import { Suspense } from "react";
 import ModalFrame from "../shared/modal-frame";
 import { TablePages } from "./table-pages";
+import { useParams } from "next/navigation";
 
 const TopicsList_ = () => {
-  const { data, isFetching } = useTopicsList();
+  const { section, arena } = useParams<{ section?: string; arena?: string }>();
+  console.log({ section, arena });
+  const { data, isFetching } = useTopicsList({ section, arena });
 
   if (!data) {
     return null;

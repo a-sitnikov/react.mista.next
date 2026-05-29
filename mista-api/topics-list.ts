@@ -43,16 +43,13 @@ function parseTopics(html: string): ITopicsListItem[] | undefined {
   });
 }
 
-export const mistaTopicsList = async (
-  searchParams: URLSearchParams,
-  cookie?: string | null,
-) => {
+export const mistaTopicsList = async (url: string, cookie?: string | null) => {
   const headers = new Headers();
   if (cookie) {
     headers.set("cookie", cookie);
   }
 
-  const response = await fetchMista(`/${searchParams.toString()}`, { headers });
+  const response = await fetchMista(url, { headers });
   const html = await response.text();
 
   const respHeaders = new Headers(response.headers);

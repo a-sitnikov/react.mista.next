@@ -5,9 +5,21 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const cookie = req.headers.get("cookie");
 
+  const section = url.searchParams.get("section");
+  const arena = url.searchParams.get("arena");
+  const mistaUrl = (() => {
+    if (section) {
+      return `/section/${section}`;
+    } else if (arena) {
+      return `/arena/${arena}`;
+    } else {
+      return "/";
+    }
+  })();
+
   try {
     const { ok, data, text, headers } = await mistaTopicsList(
-      url.searchParams,
+      `${mistaUrl}${url.search}`,
       cookie,
     );
 

@@ -11,6 +11,12 @@ export async function GET() {
     { arena: "it", name: "Мобильный мир", code: "mobile" },
     { arena: "job", name: "Вакансии", code: "vacancies" },
     { arena: "job", name: "Работа", code: "job" },
+    { arena: "job", name: "Обучение и развитие", code: "study" },
+    { arena: "life", name: "Жизнь форума", code: "forum" },
+    { arena: "life", name: "Как страшно жить", code: "fear" },
+    { arena: "life", name: "Наука и технологии", code: "science" },
+    { arena: "life", name: "Здоровый образ жизни", code: "health" },
+    { arena: "life", name: "Юмор", code: "lol" },
   ];
 
   try {
