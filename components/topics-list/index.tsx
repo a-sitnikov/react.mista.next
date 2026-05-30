@@ -59,7 +59,6 @@ const TopicsList_ = () => {
               />
               {!isNil(expandedMsgNumber) && (
                 <TopicPreview
-                  key={expandedMsgNumber}
                   item={item}
                   initialMsgNumber={expandedMsgNumber}
                   close={() =>

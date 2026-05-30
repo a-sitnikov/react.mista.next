@@ -18,6 +18,14 @@ export const TopicPreview: React.FC<IProps> = ({
   close,
 }) => {
   const [msgNumber, setMsgNumber] = useState(initialMsgNumber);
+  const [prevInitialMsgNumber, setPrevInitialMsgNumber] =
+    useState(initialMsgNumber);
+
+  if (initialMsgNumber !== prevInitialMsgNumber) {
+    setPrevInitialMsgNumber(initialMsgNumber);
+    setMsgNumber(initialMsgNumber);
+  }
+
   const onClickFirst = () => {
     setMsgNumber(0);
   };
