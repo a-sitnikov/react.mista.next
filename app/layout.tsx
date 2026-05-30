@@ -31,12 +31,12 @@ export default async function RootLayout({
   const themeClass = theme === "dark" ? "dark" : undefined;
 
   return (
-    <html lang="en" className={themeClass}>
+    <html lang="ru" className={themeClass}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppProviders>
-          <NavBar />
+          <NavBar isDarkTheme={theme === "dark"} />
           <Container className="mt-16">{children}</Container>
         </AppProviders>
       </body>

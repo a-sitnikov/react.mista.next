@@ -1,17 +1,21 @@
-import { ChangeEventHandler } from "react";
-
+import { useState } from "react";
 import { useSections } from "@/store/query-hooks";
 import { groupBy } from "@/lib/utils";
 import {
-  NativeSelect,
-  NativeSelectOptGroup,
-  NativeSelectOption,
-} from "../ui/native-select";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { useParams, useRouter } from "next/navigation";
 
 export const SelectSection = () => {
   const router = useRouter();
-  const { section } = useParams<{ section?: string }>();
+  const { section = "all" } = useParams<{ section?: string }>();
+  const [open, setOpen] = useState(false);
 
   const { data: items = [], isError } = useSections();
   if (isError) {
@@ -20,9 +24,10 @@ export const SelectSection = () => {
 
   const tree = groupBy(items, (item) => item.arena);
 
-  const handleSectionChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newSection = e.target.value;
-    if (!newSection) {
+  const handleSectionChange = (newSection: string) => {
+    setOpen(true);
+
+    if (newSection === "all") {
       router.push("/");
     } else {
       router.push(`/section/${newSection}`);
@@ -30,21 +35,28 @@ export const SelectSection = () => {
   };
 
   return (
-    <NativeSelect
+    <Select
       value={section}
-      onChange={handleSectionChange}
-      className="bg-background border-borderOuter w-60"
+      open={open}
+      onOpenChange={setOpen}
+      onValueChange={handleSectionChange}
     >
-      <NativeSelectOption value="">Все секции</NativeSelectOption>
-      {Object.entries(tree).map(([arena, group]) => (
-        <NativeSelectOptGroup key={arena} label={arena.toUpperCase()}>
-          {group.map((item) => (
-            <NativeSelectOption key={item.code} value={item.code}>
-              {item.name}
-            </NativeSelectOption>
-          ))}
-        </NativeSelectOptGroup>
-      ))}
-    </NativeSelect>
+      <SelectTrigger className="w-60 bg-background border border-borderOuter">
+        <SelectValue placeholder="Все секции" />
+      </SelectTrigger>
+      <SelectContent position="popper">
+        <SelectItem value="all">Все секции</SelectItem>
+        {Object.entries(tree).map(([arena, group]) => (
+          <SelectGroup key={arena}>
+            <SelectLabel>{arena.toUpperCase()}</SelectLabel>
+            {group.map((item) => (
+              <SelectItem key={item.code} value={item.code}>
+                {item.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        ))}
+      </SelectContent>
+    </Select>
   );
 };

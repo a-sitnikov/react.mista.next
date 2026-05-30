@@ -1,5 +1,5 @@
 "use client";
-import { type ComponentProps, type FC } from "react";
+import { type ComponentProps } from "react";
 import {
   NavigationMenuItem,
   NavigationMenuLink,
@@ -8,9 +8,11 @@ import {
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 
-export const NavMenuList: FC<ComponentProps<typeof NavigationMenuList>> = ({
-  ...props
-}) => {
+interface IProps extends ComponentProps<typeof NavigationMenuList> {
+  isDarkTheme: boolean;
+}
+
+export const NavMenuList: React.FC<IProps> = ({ isDarkTheme, ...props }) => {
   const links = [
     { name: "1C", link: `/?forum=1C` },
     { name: "IT", link: `/?forum=IT` },
@@ -32,7 +34,10 @@ export const NavMenuList: FC<ComponentProps<typeof NavigationMenuList>> = ({
       ))}
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <ThemeSwitcher className="text-foreground" />
+          <ThemeSwitcher
+            className="text-foreground"
+            isDarkTheme={isDarkTheme}
+          />
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>
