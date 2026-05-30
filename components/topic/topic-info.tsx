@@ -12,7 +12,7 @@ export const TopicInfo: React.FC<IProps> = ({ info }) => {
                 [grid-template-areas:'user_message']
                 max-md:grid-cols-[1fr] 
                 max-md:[grid-template-areas:'message'] 
-                border-t bg-background
+                bg-background
                 max-md:border max-md:border-borderOuter 
                 max-md:mb-1.5"
     >
