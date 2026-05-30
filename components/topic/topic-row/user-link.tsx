@@ -19,7 +19,7 @@ export const UserLink: React.FC<IProps> = ({
       href={`/user/${id}`}
       className={twMerge(
         "font-bold px-1 text-foreground break-all",
-        isAuthor && "bg-amber-400 rounded-xs",
+        isAuthor && "bg-amber-400 dark:bg-yellow-900 rounded-xs",
         className,
       )}
       prefetch={false}
