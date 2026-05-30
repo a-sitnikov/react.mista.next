@@ -10,16 +10,26 @@ import { LastLinkCell } from "./cells/last-link-cell";
 
 interface IProps {
   item: ITopicsListItem;
+  expanded: boolean;
+  setExpandedRows: React.Dispatch<React.SetStateAction<Map<string, number>>>;
 }
 
-export const TopicsListRow: React.FC<IProps> = ({ item }) => {
+export const TopicsListRow: React.FC<IProps> = ({
+  item,
+  expanded,
+  setExpandedRows,
+}) => {
   return (
-    <div className="c-topics-list-row">
+    <div className="c-topics-list-row sticky top-[80px] max-md:top-14">
       <ArenaCell item={item} />
       <SectionCell item={item} />
-      <ExpandCell item={item} />
+      <ExpandCell
+        item={item}
+        expanded={expanded}
+        setExpandedRows={setExpandedRows}
+      />
       <TitleCell item={item} />
-      <CountCell item={item} />
+      <CountCell item={item} setExpandedRows={setExpandedRows} />
       <AuthorCell item={item} />
       <UpdatedCell item={item} />
       <LastLinkCell item={item} />

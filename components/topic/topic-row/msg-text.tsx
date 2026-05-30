@@ -3,15 +3,16 @@ import { LinkToPost } from "@/components/shared/link-to-post";
 import { PreviewImage } from "@/components/shared/preview-image";
 import { Code } from "lucide-react";
 import parse, { DOMNode, domToReact, Element } from "html-react-parser";
-import { usePrepareHtml } from "../hooks/use-prepare-html";
+import { prepareHtml } from "../utils";
+import { twMerge } from "tailwind-merge";
 
 interface IProps {
   text: string;
   topicId: string;
+  className?: string;
 }
 
-export const MsgText: React.FC<IProps> = ({ text, topicId }) => {
-  const { prepareHtml } = usePrepareHtml();
+export const MsgText: React.FC<IProps> = ({ text, topicId, className }) => {
   const content = prepareHtml(text, topicId);
 
   const options = {
@@ -59,7 +60,12 @@ export const MsgText: React.FC<IProps> = ({ text, topicId }) => {
   };
 
   return (
-    <div className="[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap">
+    <div
+      className={twMerge(
+        "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap",
+        className,
+      )}
+    >
       {parse(content, options)}
     </div>
   );

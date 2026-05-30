@@ -4,14 +4,20 @@ import { TopicsListRow } from "./topics-list-row";
 import { TableHeader } from "./table-header";
 import { useTopicsList } from "@/store/query-hooks";
 import { SelectSection } from "@/components/shared/select-section";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import ModalFrame from "../shared/modal-frame";
 import { TablePages } from "./table-pages";
 import { useParams, useSearchParams } from "next/navigation";
+import { TopicPreview } from "./topic-preview";
+import { isNil } from "@/lib/utils";
 
 const TopicsList_ = () => {
   const { section, arena } = useParams<{ section?: string; arena?: string }>();
   const searchParams = useSearchParams();
+
+  const [expandedRows, setExpandedRows] = useState<Map<string, number>>(
+    new Map(),
+  );
 
   const { data, isFetching } = useTopicsList({
     page: searchParams.get("page") ?? undefined,
@@ -42,9 +48,32 @@ const TopicsList_ = () => {
                   max-md:gap-1.5"
       >
         <TableHeader isLoading={isFetching} />
-        {items.map((item) => (
-          <TopicsListRow key={item.id} item={item} />
-        ))}
+        {items.map((item) => {
+          const expandedMsgNumber = expandedRows.get(item.id);
+          return (
+            <div key={item.id}>
+              <TopicsListRow
+                item={item}
+                expanded={!isNil(expandedMsgNumber)}
+                setExpandedRows={setExpandedRows}
+              />
+              {!isNil(expandedMsgNumber) && (
+                <TopicPreview
+                  key={expandedMsgNumber}
+                  item={item}
+                  initialMsgNumber={expandedMsgNumber}
+                  close={() =>
+                    setExpandedRows((prev) => {
+                      const newMap = new Map(prev);
+                      newMap.delete(item.id);
+                      return newMap;
+                    })
+                  }
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
       <TablePages />
     </div>
