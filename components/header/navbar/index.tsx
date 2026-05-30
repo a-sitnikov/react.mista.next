@@ -10,7 +10,7 @@ export const NavBar: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-white">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="text-xl font-bold text-foreground">

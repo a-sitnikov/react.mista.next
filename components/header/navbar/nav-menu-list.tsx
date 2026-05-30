@@ -1,17 +1,16 @@
 "use client";
+import { type ComponentProps, type FC } from "react";
 import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { NavigationMenuListProps } from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
+import { ThemeSwitcher } from "./theme-switcher";
 
-interface IProps extends NavigationMenuListProps {
-  onClick?: () => void;
-}
-
-export const NavMenuList: React.FC<IProps> = ({ onClick, ...props }) => {
+export const NavMenuList: FC<ComponentProps<typeof NavigationMenuList>> = ({
+  ...props
+}) => {
   const links = [
     { name: "1C", link: `/?forum=1C` },
     { name: "IT", link: `/?forum=IT` },
@@ -25,17 +24,17 @@ export const NavMenuList: React.FC<IProps> = ({ onClick, ...props }) => {
       {links.map((item) => (
         <NavigationMenuItem key={item.name}>
           <NavigationMenuLink asChild>
-            <Link
-              href={item.link}
-              onClick={onClick}
-              className="text-foreground"
-              prefetch={false}
-            >
+            <Link href={item.link} className="text-foreground" prefetch={false}>
               {item.name}
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       ))}
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <ThemeSwitcher className="text-foreground" />
+        </NavigationMenuLink>
+      </NavigationMenuItem>
     </NavigationMenuList>
   );
 };
