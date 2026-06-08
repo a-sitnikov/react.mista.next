@@ -5,7 +5,7 @@ import { getCachedTopicData } from "./use-topic-messages";
 
 interface IProps {
   topicId: string;
-  msgNumber: number;
+  msgNumber: number | undefined;
 }
 
 export const useMessageData = <TError = Error, TData = IMessage>(
@@ -15,7 +15,7 @@ export const useMessageData = <TError = Error, TData = IMessage>(
       IMessage,
       TError,
       TData,
-      [QueryKeys.TopicMessageData, string, number]
+      [QueryKeys.TopicMessageData, string, number | undefined]
     >,
     "queryKey" | "queryFn"
   >,

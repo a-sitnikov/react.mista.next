@@ -2,16 +2,12 @@ import { ITopicsListItem } from "@/mista-api/types";
 
 type IProps = {
   item: ITopicsListItem;
-  setExpandedRows: React.Dispatch<React.SetStateAction<Map<string, number>>>;
+  setExpandedMsgNumber: (msgNumber: number | undefined) => void;
 };
 
-export const CountCell: React.FC<IProps> = ({ item, setExpandedRows }) => {
+export const CountCell: React.FC<IProps> = ({ item, setExpandedMsgNumber }) => {
   const handleClick = () => {
-    setExpandedRows((prev) => {
-      const newMap = new Map(prev);
-      newMap.set(item.id, item.count);
-      return newMap;
-    });
+    setExpandedMsgNumber(item.count);
   };
 
   return (
