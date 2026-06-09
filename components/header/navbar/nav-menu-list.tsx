@@ -8,11 +8,9 @@ import {
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 
-interface IProps extends ComponentProps<typeof NavigationMenuList> {
-  isDarkTheme: boolean;
-}
+type IProps = ComponentProps<typeof NavigationMenuList>;
 
-export const NavMenuList: React.FC<IProps> = ({ isDarkTheme, ...props }) => {
+export const NavMenuList: React.FC<IProps> = (props) => {
   const links = [
     { name: "1C", link: `/?forum=1C` },
     { name: "IT", link: `/?forum=IT` },
@@ -34,10 +32,7 @@ export const NavMenuList: React.FC<IProps> = ({ isDarkTheme, ...props }) => {
       ))}
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <ThemeSwitcher
-            className="text-foreground"
-            isDarkTheme={isDarkTheme}
-          />
+          <ThemeSwitcher className="text-foreground" />
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>

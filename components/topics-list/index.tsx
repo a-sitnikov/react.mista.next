@@ -13,7 +13,7 @@ const TopicsList_ = () => {
   const { section, arena } = useParams<{ section?: string; arena?: string }>();
   const searchParams = useSearchParams();
 
-  const { data, isFetching } = useTopicsList({
+  const { data, isLoading, refetch } = useTopicsList({
     page: searchParams.get("page") ?? undefined,
     arena,
     section,
@@ -41,7 +41,7 @@ const TopicsList_ = () => {
                   md:border border-borderOuter
                   max-md:gap-1.5"
       >
-        <TableHeader isLoading={isFetching} />
+        <TableHeader isLoading={isLoading} update={refetch} />
         {items.map((item) => (
           <TopicsListRow key={item.id} item={item} />
         ))}

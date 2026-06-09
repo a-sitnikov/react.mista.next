@@ -6,11 +6,7 @@ import { Menu } from "lucide-react";
 import { NavMenuList } from "./nav-menu-list";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
 
-interface IProps {
-  isDarkTheme: boolean;
-}
-
-export const NavBar: React.FC<IProps> = ({ isDarkTheme }) => {
+export const NavBar: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,7 +19,7 @@ export const NavBar: React.FC<IProps> = ({ isDarkTheme }) => {
         {/* Desktop NavigationMenu */}
         <div className="hidden md:block">
           <NavigationMenu>
-            <NavMenuList isDarkTheme={isDarkTheme} />
+            <NavMenuList />
           </NavigationMenu>
         </div>
         {/* Mobile burger */}
@@ -46,8 +42,7 @@ export const NavBar: React.FC<IProps> = ({ isDarkTheme }) => {
           <NavigationMenu orientation="vertical">
             <NavMenuList
               onClick={() => setOpen(false)}
-              className="flex flex-col space-y-3"
-              isDarkTheme={isDarkTheme}
+              className="flex flex-col space-y-3 items-start"
             />
           </NavigationMenu>
         </div>

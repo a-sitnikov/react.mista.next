@@ -6,9 +6,10 @@ import {
 
 interface IProps {
   isLoading: boolean;
+  update: () => void;
 }
 
-export const TableHeader: React.FC<IProps> = ({ isLoading }) => {
+export const TableHeader: React.FC<IProps> = ({ isLoading, update }) => {
   return (
     <div
       className="
@@ -32,9 +33,13 @@ export const TableHeader: React.FC<IProps> = ({ isLoading }) => {
       <div>
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="cursor-pointer">
-              {isLoading ? "Обновляется" : "Обновлено"}
-            </span>
+            {isLoading ? (
+              <span>Обновляется</span>
+            ) : (
+              <span className="cursor-pointer" onClick={update}>
+                Обновлено
+              </span>
+            )}
           </TooltipTrigger>
           <TooltipContent>
             <p>Обновить список</p>

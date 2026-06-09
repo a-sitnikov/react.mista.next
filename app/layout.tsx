@@ -35,8 +35,8 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProviders>
-          <NavBar isDarkTheme={theme === "dark"} />
+        <AppProviders theme={theme}>
+          <NavBar />
           <Container className="mt-16">{children}</Container>
         </AppProviders>
       </body>
