@@ -13,7 +13,6 @@ interface IProps {
 }
 
 export const MsgTooltipContent: React.FC<IProps> = ({ topicId, n, close }) => {
-  // const [info, setInfo] = useState<ITopicInfo>();
   const [item, setItem] = useState<IMessage>();
 
   const queryClient = useQueryClient();
@@ -44,9 +43,9 @@ export const MsgTooltipContent: React.FC<IProps> = ({ topicId, n, close }) => {
   }, [topicId, n]);
 
   return (
-    <div>
+    <>
       <MsgTooltipHeader close={close} item={item} />
       <MsgTooltipBody item={item} topicId={topicId} />
-    </div>
+    </>
   );
 };
