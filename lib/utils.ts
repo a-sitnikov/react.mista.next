@@ -27,25 +27,25 @@ export const undefinedIfEmpty = <T>(value: T | undefined): T | undefined => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const childrenToText = (children: any[] | undefined): string[] => {
+export const asArray = <T>(value: T | T[]): T[] =>
+  Array.isArray(value) ? value : [value];
+
+export const childrenToText = (children: unknown | undefined): string[] => {
   if (!children) return [""];
 
-  return children.map((value) => {
-    if (!value) return value;
+  return asArray(children).map((value) => {
+    if (!value) return "";
 
     if (typeof value === "string") {
       return value;
-    } else if (value.type === "br") {
-      return "<br>";
     } else if (
-      value.type.displayName === "Connect(LinkToPost)" ||
-      value.type.displayName === "Connect(t)"
+      typeof value === "object" &&
+      "type" in value &&
+      value.type === "br"
     ) {
-      return value.props.number;
+      return "<br>";
     } else {
-      console.log(value);
-      return value;
+      return String(value);
     }
   });
 };

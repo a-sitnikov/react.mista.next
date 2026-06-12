@@ -1,6 +1,6 @@
 //https://infostart.ru/1c/tools/1598931/
 
-export const highlight = (text: string) => {
+const highlight = (text: string) => {
   const keywords = new Set(
     (
       "if|если|then|тогда|elsif|иначеесли|else|иначе|endif|конецесли" +
@@ -11,7 +11,7 @@ export const highlight = (text: string) => {
       "|endtry|конецпопытки|raise|вызватьисключение|false|ложь|true|истина" +
       "|undefined|неопределено|null|new|новый|execute|выполнить" +
       "|асинх|async|ждать|wait"
-    ).split("|")
+    ).split("|"),
   );
 
   const Спецсиволы = new Set("():;.,=+-*<>?[]%/".split(""));
@@ -83,7 +83,7 @@ export const highlight = (text: string) => {
           // Нашли парную кавычку - окрашиваем как строку
           ДобавитьЧастьСтроки1С(
             Сред(СтрокаКода, НачалоСтроки, Поз - НачалоСтроки + 1),
-            мЦветСтроки
+            мЦветСтроки,
           );
           ВСтроке = false;
           Токен = "";
@@ -97,7 +97,7 @@ export const highlight = (text: string) => {
           // Нашли парную скобку - окрашиваем как комментарий
           ДобавитьЧастьСтроки1С(
             Сред(СтрокаКода, НачалоСтроки, Поз - НачалоСтроки + 1),
-            мЦветСтроки
+            мЦветСтроки,
           );
           ВСтрокеСкобка = false;
           Токен = "";
@@ -166,7 +166,7 @@ export const highlight = (text: string) => {
           // Проверяется на комментарий
           ДобавитьЧастьСтроки1С(
             Прав(СтрокаКода, СтрокаКода.length - Поз + 1),
-            мЦветКомментария
+            мЦветКомментария,
           );
           return;
         }
@@ -202,7 +202,7 @@ export const highlight = (text: string) => {
         // Встретился символ препроцессора
         ДобавитьЧастьСтроки1С(
           Прав(СтрокаКода, СтрокаКода.length - Поз + 1),
-          мЦветПрепроцессора
+          мЦветПрепроцессора,
         );
         Поз = СтрокаКода.length;
         break;
@@ -219,13 +219,13 @@ export const highlight = (text: string) => {
       // Многострочная строка
       ДобавитьЧастьСтроки1С(
         Сред(СтрокаКода, НачалоСтроки, Поз - НачалоСтроки + 1),
-        мЦветСтроки
+        мЦветСтроки,
       );
     } else if (ВСтрокеСкобка) {
       // Незавершенный литерал
       ДобавитьЧастьСтроки1С(
         Сред(СтрокаКода, НачалоСтроки, Поз - НачалоСтроки + 1),
-        мЦветСтроки
+        мЦветСтроки,
       );
     } else if (!ПустаяСтрока(Токен)) {
       // Анализируем последний токен строки кода
@@ -271,4 +271,35 @@ export const highlight = (text: string) => {
   return result.join("\n");
 };
 
-export default highlight;
+const trimNewLines = (str: string) => {
+  let start = 0;
+  let end = str.length;
+
+  // Remove leading newlines
+  while (start < end && (str[start] === "\n" || str[start] === "\r")) {
+    start++;
+  }
+
+  // Remove trailing newlines
+  while (end > start && (str[end - 1] === "\n" || str[end - 1] === "\r")) {
+    end--;
+  }
+
+  return str.substring(start, end);
+};
+
+export const prepareText = (text: string): string => {
+  // replace double new-lines
+  let newtext = text
+    .replace(/\n<br>/g, "\n")
+    .replace(/<br>\n/g, "\n")
+    .replace(/\r<br>/g, "\n")
+    .replace(/<br>\r/g, "\n")
+    .replace(/<br>/g, "\n")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt");
+
+  newtext = trimNewLines(newtext);
+  return highlight(newtext);
+};

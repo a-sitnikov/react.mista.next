@@ -9,10 +9,14 @@ import { fetchMessage } from "@/app/api/utils";
 interface IProps {
   topicId: string;
   n: number;
-  close: () => void;
+  headerRef?: React.Ref<HTMLDivElement>;
 }
 
-export const MsgTooltipContent: React.FC<IProps> = ({ topicId, n, close }) => {
+export const MsgTooltipContent: React.FC<IProps> = ({
+  topicId,
+  n,
+  headerRef,
+}) => {
   const [item, setItem] = useState<IMessage>();
 
   const queryClient = useQueryClient();
@@ -44,7 +48,7 @@ export const MsgTooltipContent: React.FC<IProps> = ({ topicId, n, close }) => {
 
   return (
     <>
-      <MsgTooltipHeader close={close} item={item} />
+      <MsgTooltipHeader ref={headerRef} item={item} />
       <MsgTooltipBody item={item} topicId={topicId} />
     </>
   );

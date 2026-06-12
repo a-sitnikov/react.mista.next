@@ -1,10 +1,10 @@
 import { CustomLink } from "@/components/shared/custom-link";
 import { LinkToPost } from "@/components/shared/link-to-post";
 import { PreviewImage } from "@/components/shared/preview-image";
-import { Code } from "lucide-react";
 import parse, { DOMNode, domToReact, Element } from "html-react-parser";
 import { prepareHtml } from "../utils";
 import { twMerge } from "tailwind-merge";
+import { Code } from "@/components/shared/code";
 
 interface IProps {
   text: string;
@@ -39,9 +39,7 @@ export const MsgText: React.FC<IProps> = ({ text, topicId, className }) => {
         case "code":
         case "pre":
           return (
-            <Code>
-              {domToReact(node.children as unknown as DOMNode[], options)}
-            </Code>
+            <Code>{domToReact(node.children as unknown as DOMNode[])}</Code>
           );
 
         case "img": {
@@ -63,6 +61,7 @@ export const MsgText: React.FC<IProps> = ({ text, topicId, className }) => {
     <div
       className={twMerge(
         "[word-break:break-word] [&_pre]:scrollbar-thin max-md:[&_pre]:whitespace-pre-wrap",
+        "[&_.MARGIN]:ml-1 [&_.MARGIN]:pl-3 [&_.MARGIN]:border-l-3",
         className,
       )}
     >

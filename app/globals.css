@@ -188,4 +188,41 @@
       max-md:mb-1.5
       max-md:border max-md:border-borderOuter;
   }
+
+  .c-code-1C {
+    font-family:
+      courier new,
+      courier;
+
+    @apply border border-dashed border-borderInner p-2 scrollbar-thin tab-4;
+    @apply w-full overflow-x-auto text-left;
+
+    scrollbar-color: #adb3be transparent;
+
+    .bg {
+      color: blue;
+      @apply dark:text-[rgb(50,150,255)];
+    }
+    .num,
+    .str {
+      color: black;
+      @apply dark:text-white;
+    }
+    .par {
+      color: brown;
+    }
+    .com {
+      color: green;
+      @apply dark:text-[rgb(91,236,161)];
+    }
+    .sp {
+      color: red;
+    }
+    .pr {
+      color: brown;
+    }
+    .key {
+      color: red;
+    }
+  }
 }
