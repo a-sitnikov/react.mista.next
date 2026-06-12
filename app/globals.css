@@ -194,7 +194,7 @@
       courier new,
       courier;
 
-    @apply border border-dashed border-borderInner p-2 scrollbar-thin tab-4;
+    @apply p-2 scrollbar-thin tab-4;
     @apply w-full overflow-x-auto text-left;
 
     scrollbar-color: #adb3be transparent;

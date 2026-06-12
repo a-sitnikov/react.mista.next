@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { childrenToText } from "@/lib/utils";
 import { prepareText } from "./code_highlight";
+import { twMerge } from "tailwind-merge";
 
 export const Code: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [hidden, setHidden] = useState(true);
@@ -18,26 +19,26 @@ export const Code: React.FC<React.PropsWithChildren> = ({ children }) => {
     setHidden((prev) => !prev);
   };
 
-  const preStyle: React.CSSProperties = {};
-
-  if (hidden && linesCount > 7) {
-    preStyle.overflow = "hidden";
-    preStyle.height = "135px";
-  } else {
-    preStyle.overflow = "auto";
-    preStyle.height = "auto";
-  }
-
   return (
-    <div className="mt-1">
+    <div
+      className={twMerge(
+        "relative border border-dashed border-borderInner",
+        linesCount > 7 && "pb-6 mb-3",
+      )}
+    >
       <pre
-        className="c-code-1C"
-        style={preStyle}
+        className={twMerge(
+          "c-code-1C overflow-hidden",
+          hidden && linesCount > 7 && "max-h-40",
+        )}
         dangerouslySetInnerHTML={{ __html: text }}
       ></pre>
       {linesCount > 7 && (
-        <div className="text-left font-[courier_new,courier] text-blue-500 my-[5px] mx-auto border border-dashed border-[#ddd] pb-[10px] w-full overflow-x-auto [scrollbar-color:#adb3be_transparent] scrollbar-thin tab-4 ">
-          <span className="expand-button-span" onClick={onShowClick}>
+        <div className="absolute -bottom-3 py-0.5 text-center mx-auto w-full overflow-x-auto [scrollbar-color:#adb3be_transparent] scrollbar-thin tab-4 ">
+          <span
+            className="px-3 py-0.5 border rounded-sm border-dashed border-[#ddd] cursor-pointer bg-background"
+            onClick={onShowClick}
+          >
             {hidden ? `Показать: ${linesCount} строк` : "Скрыть"}
           </span>
         </div>
