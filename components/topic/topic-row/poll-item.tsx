@@ -1,4 +1,4 @@
-import { DOMAIN } from "@/app/api/constants";
+import { MISTA_DOMAIN } from "@/app/api/constants";
 import { IPollItem } from "@/mista-api/types";
 import Link from "next/link";
 
@@ -38,7 +38,7 @@ export const PollItem: React.FC<IProps> = ({ item, vartiant, imgWidth }) => {
         <div className="[grid-area:bar]">
           <a href={"/"}>
             <img
-              src={`${DOMAIN}${vartiant.img}`}
+              src={`${MISTA_DOMAIN}${vartiant.img}`}
               alt={`вариант ${item.number}`}
               className="block h-4"
               style={{ width: `${imgWidth}%` }}

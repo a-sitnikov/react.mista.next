@@ -1,3 +1,4 @@
+import { MISTA_DOMAIN } from "@/app/api/constants";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
@@ -16,7 +17,7 @@ export const UserLink: React.FC<IProps> = ({
 }) => {
   return (
     <Link
-      href={`/user/${id}`}
+      href={`${MISTA_DOMAIN}/user/${id}`}
       className={twMerge(
         "font-bold px-1 text-foreground break-all",
         isAuthor && "bg-amber-400 dark:bg-yellow-900 rounded-xs",

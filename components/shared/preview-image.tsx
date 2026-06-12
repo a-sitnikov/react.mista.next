@@ -1,4 +1,4 @@
-import { DOMAIN } from "@/app/api/constants";
+import { MISTA_DOMAIN } from "@/app/api/constants";
 import React from "react";
 import { PhotoView } from "react-photo-view";
 
@@ -11,7 +11,7 @@ interface IProps
 export const PreviewImage: React.FC<IProps> = ({ src, fullSrc, alt }) => {
   const srcWithDomain = (() => {
     if (typeof src === "string" && src?.startsWith("/")) {
-      return `${DOMAIN}/${src}`;
+      return `${MISTA_DOMAIN}/${src}`;
     } else {
       return src;
     }
@@ -21,7 +21,7 @@ export const PreviewImage: React.FC<IProps> = ({ src, fullSrc, alt }) => {
     const res = fullSrc ? fullSrc : src;
 
     if (typeof res === "string" && res?.startsWith("/")) {
-      return `${DOMAIN}/${res}`;
+      return `${MISTA_DOMAIN}/${res}`;
     } else {
       return res;
     }

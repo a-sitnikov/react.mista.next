@@ -1,3 +1,4 @@
+import { MISTA_DOMAIN } from "@/app/api/constants";
 import { ITopicsListItem } from "@/mista-api/types";
 import Link from "next/link";
 
@@ -15,7 +16,7 @@ export const AuthorCell: React.FC<IProps> = ({ item }) => (
                 [grid-area:author]"
   >
     <Link
-      href={`/user/${item.author.id}`}
+      href={`${MISTA_DOMAIN}/user/${item.author.id}`}
       prefetch={false}
       className="my-auto break-all text-inherit"
     >

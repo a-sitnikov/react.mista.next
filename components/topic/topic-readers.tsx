@@ -1,4 +1,4 @@
-import { DOMAIN } from "@/app/api/constants";
+import { MISTA_DOMAIN } from "@/app/api/constants";
 import { IUser } from "@/mista-api/types";
 
 interface IProps {
@@ -15,7 +15,7 @@ export const TopicReaders: React.FC<IProps> = ({ readers }) => {
       {readers?.map((r) => (
         <a
           key={r.id}
-          href={`${DOMAIN}/user/${r.id}`}
+          href={`${MISTA_DOMAIN}/user/${r.id}`}
           className="[word-break:break-word] text-muted-foreground hover:text-foreground"
         >
           {r.name}

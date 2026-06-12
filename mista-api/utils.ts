@@ -1,5 +1,5 @@
 const fetchMistaDirect = (url: string, options?: RequestInit) => {
-  const MISTA_DOMAIN = process.env.MISTA_DOMAIN;
+  const MISTA_DOMAIN = process.env.NEXT_PUBLIC_MISTA_DOMAIN;
   const fullUrl = `${MISTA_DOMAIN}${url}`;
 
   return fetch(fullUrl, {
@@ -11,7 +11,7 @@ const fetchMistaDirect = (url: string, options?: RequestInit) => {
 };
 
 const fetchMistaProxy = (url: string, options?: RequestInit) => {
-  const MISTA_DOMAIN = process.env.MISTA_DOMAIN;
+  const MISTA_DOMAIN = process.env.NEXT_PUBLIC_MISTA_DOMAIN;
   const fullUrl = `${MISTA_DOMAIN}${url}`;
 
   const proxyURL = process.env.PROXY_URL ?? "";
