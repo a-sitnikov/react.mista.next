@@ -30,7 +30,7 @@ export const Topic: React.FC<IProps> = ({ params }) => {
   }
 
   return (
-    <div className="md:border md:border-borderOuter mb-4">
+    <div className="md:border md:border-borderOuter mb-10">
       <TopicInfo info={data.info} />
       {data.items.map((item) => (
         <TopicRow
