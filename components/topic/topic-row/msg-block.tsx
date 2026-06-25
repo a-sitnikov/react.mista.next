@@ -3,9 +3,9 @@ import { IMessage } from "@/mista-api/types";
 import { PhotoProvider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import PollChart from "./poll-chart";
-import { pollVariants } from "../constants";
-import { PreviewImage } from "@/components/shared/preview-image";
 import { MsgText } from "./msg-text";
+import { MsgImgs } from "./msg-imgs";
+import { MsgVoting } from "./msg-voting";
 
 interface IProps {
   item: IMessage;
@@ -21,29 +21,8 @@ export const MsgBlock: React.FC<IProps> = ({ item, topicId, className }) => {
       <PhotoProvider>
         {item.poll && <PollChart items={item.poll} />}
         {item.text && <MsgText text={item.text} topicId={topicId} />}
-        {item.voting && (
-          <div
-            className="font-semibold"
-            data-u={item.voting.variant}
-            style={{
-              color: pollVariants[parseInt(item.voting.variant) - 1].color,
-            }}
-          >
-            {`${item.voting.variant}. ${item.voting.text}`}
-          </div>
-        )}
-        {item.imgs && (
-          <div className="flex flex-wrap gap-2 items-start">
-            {item.imgs?.map((img, idx) => (
-              <PreviewImage
-                src={img}
-                fullSrc={img.replace("_thumb", "")}
-                key={idx}
-                className="max-w-full max-h-50 cursor-pointer"
-              />
-            ))}
-          </div>
-        )}
+        {item.voting && <MsgVoting voting={item.voting} />}
+        {item.imgs && <MsgImgs imgs={item.imgs} />}
       </PhotoProvider>
     </div>
   );

@@ -24,15 +24,17 @@ export type IPollItem = {
   votes: number;
 };
 
+export type IVoting = {
+  text: string;
+  variant: string;
+};
+
 export type IMessage = {
   n: number;
   user: IUser;
   date: string;
   text: string;
-  voting?: {
-    text: string;
-    variant: string;
-  };
+  voting?: IVoting;
   imgs?: string[];
   poll?: IPollItem[];
 };

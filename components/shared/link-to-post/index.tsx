@@ -18,8 +18,6 @@ export const LinkToPost: React.FC<IProps> = ({ topicId, n }) => {
 
   const { ref, handleRef } = useDraggable({ id: `${topicId}-${n}` });
 
-  if (n === 1) console.log(open, offset);
-
   return (
     <DragDropProvider
       onDragEnd={({ operation }) => {

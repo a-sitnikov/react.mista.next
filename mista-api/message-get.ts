@@ -2,6 +2,7 @@ import { HTMLElement, parse } from "node-html-parser";
 import { IMessage } from "./types";
 import { undefinedIfEmpty } from "@/lib/utils";
 import { fetchMista } from "./utils";
+import { MISTA_DOMAIN } from "@/app/api/constants";
 
 export const parseMessage = (html: string | HTMLElement): IMessage => {
   let row: HTMLElement;
@@ -38,7 +39,7 @@ export const parseMessage = (html: string | HTMLElement): IMessage => {
   const imgs = inlinksCell
     ?.querySelectorAll("td.slot")
     .map((slot) => slot.getAttribute("data-filename") ?? "")
-    .map((filename) => `${process.env.MISTA_DOMAIN}${filename}`)
+    .map((filename) => `${MISTA_DOMAIN}${filename}`)
     .filter(Boolean);
 
   const pollEl = row.querySelectorAll("table.tableVotingResults tr.variant");
