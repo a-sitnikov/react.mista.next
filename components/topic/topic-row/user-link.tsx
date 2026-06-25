@@ -6,6 +6,7 @@ interface IProps {
   id: string;
   name: string;
   isAuthor: boolean;
+  online: boolean;
   className?: string;
 }
 
@@ -14,6 +15,7 @@ export const UserLink: React.FC<IProps> = ({
   name,
   isAuthor,
   className,
+  online,
 }) => {
   return (
     <Link
@@ -25,7 +27,15 @@ export const UserLink: React.FC<IProps> = ({
       )}
       prefetch={false}
     >
-      {name}
+      <span className="inline-flex items-center gap-1">
+        <span>{name}</span>
+        {online && (
+          <span
+            className="h-2 w-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-black"
+            aria-hidden
+          />
+        )}
+      </span>
     </Link>
   );
 };

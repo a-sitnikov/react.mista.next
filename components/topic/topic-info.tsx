@@ -1,6 +1,6 @@
 import { MISTA_DOMAIN } from "@/app/api/constants";
 import { ITopicInfo } from "@/mista-api/types";
-import { TopicReaders } from "./topic-readers";
+import { TopicReaders } from "./topiic-readers";
 
 interface IProps {
   info: ITopicInfo;
@@ -26,7 +26,7 @@ export const TopicInfo: React.FC<IProps> = ({ info }) => {
         >
           <h1>{info.title}</h1>
         </a>
-        <TopicReaders readers={info.readers} />
+        <TopicReaders readers={info.readers} author={info.author} />
       </div>
     </div>
   );

@@ -38,6 +38,7 @@ export const Topic: React.FC<IProps> = ({ params }) => {
           item={item}
           topicId={id}
           isAuthor={item.user.id === data.info.author.id}
+          readers={data.info.readers}
         />
       ))}
       <div id="F" />
