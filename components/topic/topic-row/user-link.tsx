@@ -6,7 +6,7 @@ interface IProps {
   id: string;
   name: string;
   isAuthor: boolean;
-  online: boolean;
+  online?: boolean;
   className?: string;
 }
 
