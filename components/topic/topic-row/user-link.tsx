@@ -21,14 +21,14 @@ export const UserLink: React.FC<IProps> = ({
     <Link
       href={`${MISTA_DOMAIN}/user/${id}`}
       className={twMerge(
-        "font-bold px-1 text-foreground break-all",
-        isAuthor && "bg-amber-400 dark:bg-yellow-900 rounded-xs",
+        "block font-bold p-1 text-foreground break-all",
+        isAuthor && "bg-amber-400 dark:bg-yellow-900 rounded-sm",
         className,
       )}
       prefetch={false}
     >
-      <span className="inline-flex items-center gap-1">
-        <span>{name}</span>
+      <span className="inline-flex items-center gap-2">
+        <span className="leading-4">{name}</span>
         {online && (
           <span
             className="h-2 w-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-black"
