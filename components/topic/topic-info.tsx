@@ -1,6 +1,6 @@
 import { MISTA_DOMAIN } from "@/app/api/constants";
 import { ITopicInfo } from "@/mista-api/types";
-import { TopicReaders } from "./topiic-readers";
+import { TopicReaders } from "./topic-readers";
 
 interface IProps {
   info: ITopicInfo;
@@ -21,7 +21,7 @@ export const TopicInfo: React.FC<IProps> = ({ info }) => {
       <div className="flex flex-col items-center p-3">
         <a
           href={`${MISTA_DOMAIN}/topic/${info.id}`}
-          className="text-center text-linkColor text-2xl font-semibold"
+          className="text-center text-linkColor text-2xl font-semibold [word-break:break-word]"
           target="_blank"
         >
           <h1>{info.title}</h1>

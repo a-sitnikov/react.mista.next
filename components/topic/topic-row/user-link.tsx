@@ -21,7 +21,7 @@ export const UserLink: React.FC<IProps> = ({
     <Link
       href={`${MISTA_DOMAIN}/user/${id}`}
       className={twMerge(
-        "block font-bold p-1 text-foreground break-all",
+        "block fit-content font-bold px-1 text-foreground break-all",
         isAuthor && "bg-amber-400 dark:bg-yellow-900 rounded-sm",
         className,
       )}
